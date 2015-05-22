@@ -1,0 +1,413 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>世界那么大，我想去看看————从大数据说起 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="linhaoxiang">
+    
+
+    
+    <meta name="description" content="世界那么大，我想去看看Cloud Computing 这个词这几年已经被玩烂了，概念炒的太火，所以这套文章我不打算来解释或者介绍云计算这个东西。个人感觉这是个浮在空中的东西。反之，我打算介绍些真正落地的东西，比如大数据和分布式，起码你们在BAT可以看到大数据工程师和分布式工程师，这样或许对你们的帮助更大，然后由你们自己去总结云计算到底是个什么东西。
+
+讲讲我当初怎么接触到云的。有一天在蓝杰我就突然">
+<meta property="og:type" content="article">
+<meta property="og:title" content="世界那么大，我想去看看————从大数据说起">
+<meta property="og:url" content="http://yoursite.com/2015/05/21/世界那么大，我想去看看————从大数据说起/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="世界那么大，我想去看看Cloud Computing 这个词这几年已经被玩烂了，概念炒的太火，所以这套文章我不打算来解释或者介绍云计算这个东西。个人感觉这是个浮在空中的东西。反之，我打算介绍些真正落地的东西，比如大数据和分布式，起码你们在BAT可以看到大数据工程师和分布式工程师，这样或许对你们的帮助更大，然后由你们自己去总结云计算到底是个什么东西。
+
+讲讲我当初怎么接触到云的。有一天在蓝杰我就突然">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="世界那么大，我想去看看————从大数据说起">
+<meta name="twitter:description" content="世界那么大，我想去看看Cloud Computing 这个词这几年已经被玩烂了，概念炒的太火，所以这套文章我不打算来解释或者介绍云计算这个东西。个人感觉这是个浮在空中的东西。反之，我打算介绍些真正落地的东西，比如大数据和分布式，起码你们在BAT可以看到大数据工程师和分布式工程师，这样或许对你们的帮助更大，然后由你们自己去总结云计算到底是个什么东西。
+
+讲讲我当初怎么接触到云的。有一天在蓝杰我就突然">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Hexo" title="Hexo"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hexo">Hexo</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/05/21/世界那么大，我想去看看————从大数据说起/" title="世界那么大，我想去看看————从大数据说起" itemprop="url">世界那么大，我想去看看————从大数据说起</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="linhaoxiang" target="_blank" itemprop="author">linhaoxiang</a>
+		
+  <p class="article-time">
+    <time datetime="2015-05-21T06:53:27.000Z" itemprop="datePublished"> 發表於 2015-05-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#世界那么大，我想去看看"><span class="toc-number">1.</span> <span class="toc-text">世界那么大，我想去看看</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从大数据说起"><span class="toc-number">2.</span> <span class="toc-text">从大数据说起</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="世界那么大，我想去看看">世界那么大，我想去看看</h3><pre><code><span class="label">Cloud</span> Computing 这个词这几年已经被玩烂了，概念炒的太火，所以这套文章我不打算来解释或者介绍云计算这个东西。个人感觉这是个浮在空中的东西。反之，我打算介绍些真正落地的东西，比如大数据和分布式，起码你们在<span class="keyword">BAT可以看到大数据工程师和分布式工程师，这样或许对你们的帮助更大，然后由你们自己去总结云计算到底是个什么东西。
+</span>
+讲讲我当初怎么接触到云的。有一天在蓝杰我就突然和胡总说：胡总我想搞云计算。胡总说成啊，你先把hadoop搭起来。当时完全不知道hadoop是什么东西的我还以为只是安装个eclipse这么简单，后面想来真的是too young too simple了。当时我还是个大一下学期的渣渣啊，完全没玩过linux maven这种玩意啊！记得是搞了三天三夜，不知google了多少知识，官方文档不知道看了多少遍，当启动脚本运行起来的时候那个激动啊！现在回想起来还确实历历在目。后面就很自然的组建了云计算的实验室，然后正好当时猎豹来招人，机遇很好的暑假去实习了。<span class="number">9</span>月份实习回来，正好芒果TV那边招人做大数据，很自然的又过去了。再后来创业就不谈，到现在准备去阿里继续搞大数据。一年时间接触的都是云的东西。越接触越觉得内容太多太丰富。所以这个系列的教程我不打算讲很细节的东西，比如如何hadoop这种。要是这个都配置不好那就属于基本内功不行，再去修炼一段时间吧。反之我会很浅的讲讲大数据，分布式，hadoop，spark等等，旨在给大家形成一个整体的架构，然后其中的细的内容，大家可以自己一一去填充。
+</code></pre><h3 id="从大数据说起">从大数据说起</h3><pre><code>为什么要从大数据说起呢，因为一切的起源都是因为它。
+任何一门技术的诞生都是为了解决某件事情。那云的技术是为了解决什么呢？你想象这样的场景。给你1W个<span class="keyword">int</span>类型整数，让你去排序。这个很简单，直接冒泡解决。然后加大，100W个，这个还是简单。<span class="number">1000000</span>*4<span class="preprocessor">byte</span> ，用快排还是可以解决，内存也还吃得消。但是我现在加到<span class="number">1</span>亿个<span class="keyword">int</span>，<span class="number">10</span>亿个<span class="keyword">int</span>，那你可能只能加内存加<span class="built_in">cpu</span>来处理了。
+
+这是一种方法，你可以用分治归并的方法，开N个线程来对<span class="number">1</span>亿个数字分别排序，最后再归并，N的大小取决于你计算机核数的大小。所以我们看到面对<span class="number">1</span>亿这样的大数据，我们有一种纵向的方法就是多核多线程并行处理。当然，这个有个弊端就是你的核数不可能无限增加，不然就是天河<span class="number">2</span>号那种超级计算机了（其实也就是2W个<span class="built_in">CPU</span>合在一起）。这样的计算机不适合企业级运用。所以就有另一种方法，就是横向扩展，核数不变，但是加机器的个数。这就是现在的分布式的思想，所以才出现了集群的概念。<span class="number">1000</span>台廉价的PC服务器组成一个分布式集群，他的计算和存储能力就可以抵得上超级计算机。
+
+好了这就出现了另一个词了：分布式。计算机对数据的处理无非就两种，计算和存储。存储的话可以存在文件系统，也可以存在数据库。计算的话有各种分布式的计算框架，包括离线计算和实时计算。正因为分布式概念和技术的出现，才使得大规模计算大数据得到了发展的可能。之后就可以基于这个大数据进行更加复杂的计算和处理，往上走，出现了各种数据挖掘，机器学习。往下走，出现了各种分布式数据库，分布式存储系统。接下来每章我会介绍这些技术。
+</code></pre>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2015/05/21/世界那么大，我想去看看————从大数据说起/" data-title="世界那么大，我想去看看————从大数据说起 | Hexo" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/05/21/重新膜拜下Google————三大论文/" title="重新膜拜下Google————三大论文">
+  <strong>上一篇：</strong><br/>
+  <span>
+  重新膜拜下Google————三大论文</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/05/21/博客转到github上来啦/"  title="博客转到github上来啦">
+ <strong>下一篇：</strong><br/> 
+ <span>博客转到github上来啦
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#世界那么大，我想去看看"><span class="toc-number">1.</span> <span class="toc-text">世界那么大，我想去看看</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从大数据说起"><span class="toc-number">2.</span> <span class="toc-text">从大数据说起</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+
+  <div class="linkslist">
+  <p class="asidetitle">友情鏈接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Larry Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="/about" target="_blank" title="linhaoxiang">linhaoxiang</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

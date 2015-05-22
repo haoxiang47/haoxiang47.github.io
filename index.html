@@ -81,6 +81,213 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/05/21/泡杯咖啡，来战hadoop/" title="泡杯咖啡，来战hadoop" itemprop="url">泡杯咖啡，来战hadoop</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="linhaoxiang" target="_blank" itemprop="author">linhaoxiang</a>
+		
+  <p class="article-time">
+    <time datetime="2015-05-21T07:00:04.000Z" itemprop="datePublished"> 發表於 2015-05-21</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="hadoop到底是个啥">hadoop到底是个啥</h3>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/05/21/重新膜拜下Google————三大论文/" title="重新膜拜下Google————三大论文" itemprop="url">重新膜拜下Google————三大论文</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="linhaoxiang" target="_blank" itemprop="author">linhaoxiang</a>
+		
+  <p class="article-time">
+    <time datetime="2015-05-21T06:58:50.000Z" itemprop="datePublished"> 發表於 2015-05-21</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/05/21/世界那么大，我想去看看————从大数据说起/" title="世界那么大，我想去看看————从大数据说起" itemprop="url">世界那么大，我想去看看————从大数据说起</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="linhaoxiang" target="_blank" itemprop="author">linhaoxiang</a>
+		
+  <p class="article-time">
+    <time datetime="2015-05-21T06:53:27.000Z" itemprop="datePublished"> 發表於 2015-05-21</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="世界那么大，我想去看看">世界那么大，我想去看看</h3><pre><code><span class="label">Cloud</span> Computing 这个词这几年已经被玩烂了，概念炒的太火，所以这套文章我不打算来解释或者介绍云计算这个东西。个人感觉这是个浮在空中的东西。反之，我打算介绍些真正落地的东西，比如大数据和分布式，起码你们在<span class="keyword">BAT可以看到大数据工程师和分布式工程师，这样或许对你们的帮助更大，然后由你们自己去总结云计算到底是个什么东西。
+</span>
+讲讲我当初怎么接触到云的。有一天在蓝杰我就突然和胡总说：胡总我想搞云计算。胡总说成啊，你先把hadoop搭起来。当时完全不知道hadoop是什么东西的我还以为只是安装个eclipse这么简单，后面想来真的是too young too simple了。当时我还是个大一下学期的渣渣啊，完全没玩过linux maven这种玩意啊！记得是搞了三天三夜，不知google了多少知识，官方文档不知道看了多少遍，当启动脚本运行起来的时候那个激动啊！现在回想起来还确实历历在目。后面就很自然的组建了云计算的实验室，然后正好当时猎豹来招人，机遇很好的暑假去实习了。<span class="number">9</span>月份实习回来，正好芒果TV那边招人做大数据，很自然的又过去了。再后来创业就不谈，到现在准备去阿里继续搞大数据。一年时间接触的都是云的东西。越接触越觉得内容太多太丰富。所以这个系列的教程我不打算讲很细节的东西，比如如何hadoop这种。要是这个都配置不好那就属于基本内功不行，再去修炼一段时间吧。反之我会很浅的讲讲大数据，分布式，hadoop，spark等等，旨在给大家形成一个整体的架构，然后其中的细的内容，大家可以自己一一去填充。
+</code></pre><h3 id="从大数据说起">从大数据说起</h3><pre><code>为什么要从大数据说起呢，因为一切的起源都是因为它。
+任何一门技术的诞生都是为了解决某件事情。那云的技术是为了解决什么呢？你想象这样的场景。给你1W个<span class="keyword">int</span>类型整数，让你去排序。这个很简单，直接冒泡解决。然后加大，100W个，这个还是简单。<span class="number">1000000</span>*4<span class="preprocessor">byte</span> ，用快排还是可以解决，内存也还吃得消。但是我现在加到<span class="number">1</span>亿个<span class="keyword">int</span>，<span class="number">10</span>亿个<span class="keyword">int</span>，那你可能只能加内存加<span class="built_in">cpu</span>来处理了。
+
+这是一种方法，你可以用分治归并的方法，开N个线程来对<span class="number">1</span>亿个数字分别排序，最后再归并，N的大小取决于你计算机核数的大小。所以我们看到面对<span class="number">1</span>亿这样的大数据，我们有一种纵向的方法就是多核多线程并行处理。当然，这个有个弊端就是你的核数不可能无限增加，不然就是天河<span class="number">2</span>号那种超级计算机了（其实也就是2W个<span class="built_in">CPU</span>合在一起）。这样的计算机不适合企业级运用。所以就有另一种方法，就是横向扩展，核数不变，但是加机器的个数。这就是现在的分布式的思想，所以才出现了集群的概念。<span class="number">1000</span>台廉价的PC服务器组成一个分布式集群，他的计算和存储能力就可以抵得上超级计算机。
+
+好了这就出现了另一个词了：分布式。计算机对数据的处理无非就两种，计算和存储。存储的话可以存在文件系统，也可以存在数据库。计算的话有各种分布式的计算框架，包括离线计算和实时计算。正因为分布式概念和技术的出现，才使得大规模计算大数据得到了发展的可能。之后就可以基于这个大数据进行更加复杂的计算和处理，往上走，出现了各种数据挖掘，机器学习。往下走，出现了各种分布式数据库，分布式存储系统。接下来每章我会介绍这些技术。
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/05/21/博客转到github上来啦/" title="博客转到github上来啦" itemprop="url">博客转到github上来啦</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="linhaoxiang" target="_blank" itemprop="author">linhaoxiang</a>
+		
+  <p class="article-time">
+    <time datetime="2015-05-21T06:42:37.000Z" itemprop="datePublished"> 發表於 2015-05-21</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>今天是5.21，昨天把gitpages+hexo的博客给搭建完成。最近过的挺颓废的，需要重新整理下自己。因为六月底要去阿里实习了，这段时间要做的事情其实还挺多的，稍微列举下。<br>1.把蓝杰的云计算教程写完（我会同步到博客上）<br>2.把手头的外包接得活全部理清<br>3.把学校的各种杂事安排好<br>4.算法导论，刷刷刷！！！<br>5.github上的自己的distributed Filesystem继续coding继续维护</p>
+<p>之前的一些文章大家可以看 <a href="http://linhaoxiang.iteye.com/" target="_blank" rel="external">http://linhaoxiang.iteye.com/</a><br>ps:大半年前写的文章了，那是还是个大一的渣渣。。。。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/05/20/第一章-大学应该怎么过/" title="第一章 大学应该怎么过" itemprop="url">第一章 大学应该怎么过</a>
   </h1>
   <p class="article-author">By
@@ -97,8 +304,15 @@
         <h3 id="大学应该怎么过">大学应该怎么过</h3><p>这篇教程主要是一些个人感悟和一些云计算方面的学习历程，干货和扯淡大概1：1的比例吧</p>
 <p>首先来干货之前，我觉得有必要说下一些心路历程。因为本人高中比较素质教育，在高中的时候就接触了不少社团学生会这样的东西，所以上大学之后的那些社团以及所谓的学生工作对我来说吸引力真心不大。因此除了大一上学期好好在学校，搞了搞学习，玩了玩社团，大一下就没怎么在学校混了。<br>然而不在学校混不是出去玩了，真实情况是大一下的时候开始在蓝杰搞云计算，然后机遇比较好，大一下的那个暑假跟着钢总去了北京猎豹实习，回来之后又在广电芒果TV实习了两个多月，然后和一堆小伙伴玩了一次O2O的创业。然后现在敲下这篇文章的时候是大二下，暑假准备去阿里实习。很多人看了这些经历应该会有几个问题，我目测主要由以下几个：</p>
 <h4 id="1-大一大二都实习创业去了，课内的学业怎么办？">1.大一大二都实习创业去了，课内的学业怎么办？</h4><h4 id="2-大一大二自己的水平太渣了，能去实习吗？">2.大一大二自己的水平太渣了，能去实习吗？</h4><h4 id="3-我也想去实习，也想体验下创业，但是课内的东西都吃不消了，还有很多的课要上，感觉很迷茫怎么办？">3.我也想去实习，也想体验下创业，但是课内的东西都吃不消了，还有很多的课要上，感觉很迷茫怎么办？</h4><p>这些问题很正常，我不能说很好的回答出来，但是可以把自己的经历和处理分享出来。</p>
-<p>首先第一个问题，因为我的专业是自动化的，但是我搞的又是CS（Computer Science）的内容。所以这就有个选择的问题了。我觉得这个问题的答案是首先你要明白自己想要的是什么。大学中很多人GPA很高，成绩很好，有时候并不是因为他们喜欢读书，而是因为他们不知道自己想做什么，就先读书好了。这样在大部分人不读书的情况下。加上学校没像top2那样很严格的学习氛围，那自然很容易刷到GPA。<br>首先，我是除了第一个学期成绩挺好（专业前五吧），然后就没再搞过学习。一个是因为我没想过读研保研这事，另一个是因为正好互联网不想投行那样看学历看背景，自己可以完全用学习上课的时间去做自己的事情（当然不是鼓励大家去逃课）</p>
-<h3 id="怎么写好代码">怎么写好代码</h3><h3 id="上课重要还是逃课写代码重要">上课重要还是逃课写代码重要</h3><h3 id="一些其他的话">一些其他的话</h3>
+<p>1.首先第一个问题，因为我的专业是自动化的，但是我搞的又是CS（Computer Science）的内容。所以这就有个选择的问题了。我觉得这个问题的答案是首先你要明白自己想要的是什么。大学中很多人GPA很高，成绩很好，有时候并不是因为他们喜欢读书，而是因为他们不知道自己想做什么，就先读书好了。这样在大部分人不读书的情况下。加上学校没像top2那样很严格的学习氛围，那自然很容易刷到GPA。<br>首先，我是除了第一个学期成绩挺好（专业前五吧），然后就没再搞过学习。一个是因为我没想过读研保研这事，另一个是因为正好互联网不想投行那样看学历看背景，自己可以完全用学习上课的时间去做自己的事情（当然不是鼓励大家去逃课）。<br>然后其实我觉得你如果考前三周停止一切事情，专门去搞复习的话，GPA刷上来也不是太难的事情。</p>
+<p>2.至于说自己水平不够的人，我个人的经历是大一就在实习了，当时的技术肯定还是渣的一逼的。能去实习一个是因为机遇当时比较好，还有一个就是那一个月真的是很拼，从一个完全不知道linux，java只写过一个五子棋的菜鸟，到一个可以熟练搭建hadoop并且阅读了部分hadoop的源码。虽然确实还有很多东西没有学，水平也不够。但是依旧有了点信心了。然后就是去实习的问题。个人经历感觉，你去实习个两个月时间，技术上肯定是不可能有本质的飞跃的（除非你去MSRA那种直接接手核心项目组的）。论技术的提升肯定是不如两个月好好刷算法导论的。但是提升的是你的眼界和看待世界的层次。而且是你真正接触互联网的机会。所以实习的目的我觉得主要还是提升自我的眼界，了解象牙塔外的世界。</p>
+<p>3.这个问题我觉得解决的最好的方法就是，想清楚自己想要的是什么。你是想以后为了准求更高的学府学历呢，还是立志科研呢，还是想创业走出属于自己的路呢，还是想到BAT，Google Facebook这样的顶尖公司工作呢。当然，我知道现实的情况是，大部分人都不知道怎么选择。所以我的建议就是，去经历吧，当你把这些事情都经历一遍。参加过创业团队，为了保研努力过，去BAT实习过，那到时候这些问题应该都不是问题了。当然，选好了路就要一直走下去，不要中途再放弃了。</p>
+<h3 id="怎么写好代码">怎么写好代码</h3><p>代码这个东西真的是个很神奇的东西。当你在IDE上敲出一个工程，在终端上行输入一堆的shell指令。真的会感觉世界在自己的手中，没有这种感觉的，那只能是你代码水平还不够。<br>代码能力我们称它为coding skill。我觉得很多人写代码的经历是这样的。</p>
+<p>一门入门的语言（C，++，java）——》简单的语法和数据结构——-》通过上网搜索复制黏贴，可以完成几个小项目———》开始涉及别的语言，框架等等，发现网上搜不到现成的代码了———-》瓶颈期</p>
+<p>大部分人的水平是到这个阶段了，这还只是入门级程序员的水平。因为这样永远只会复制黏贴用用框架。之后想提升水平的话，个人有几点建议：</p>
+<p>1.强烈建议大家，安安静静花上两个月时间，把算法导论看完，里面的每一个课后题都自己敲出来或者用伪代码想出来。这样坚持下来，你会发现你的水平真的是会突飞猛进，然后去刷刷leetcode这样的OJ，刷北美的flag都不是难事<br>2.建议大家可以先广泛涉猎，然后找到自己的方向专一而攻。不管是前端，后端，算法，服务端，大数据，安卓IOS客户端等。<br>3.养成写博客的习惯。最早可以在Iteye上写，然后可以转到wordpress上自己搭博客，然后逼格在高点可以去gitpages+hexo等自己搭一个个人博客网站。<br>4.一定要会玩github，具体的东西请自行百度。<br>5.四年时间，算法导论，操作系统，计算机网络，这几本经典的黑皮书要是能刷完（记得是读透而不是过一遍），有过实习经历，github上有维护过自己的项目，有自己的博客来记录学习历程。那毕业之后，基本是国内国外的顶尖公司任你挑选的节奏。</p>
+<h3 id="上课重要还是逃课写代码重要">上课重要还是逃课写代码重要</h3><h3 id="一些其他的话">一些其他的话</h3><p>byvoid 刘佳倩 </p>
+
         
         
         <p class="article-more-link">
