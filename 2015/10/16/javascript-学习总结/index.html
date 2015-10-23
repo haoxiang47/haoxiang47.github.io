@@ -37,18 +37,21 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="今天是5.21，昨天把gitpages+hexo的博客给搭建完成。最近过的挺颓废的，需要重新整理下自己。因为六月底要去阿里实习了，这段时间要做的事情其实还挺多的，稍微列举下。1.把蓝杰的云计算教程写完（我会同步到博客上）2.把手头的外包接得活全部理清3.把学校的各种杂事安排好4.算法导论，刷刷刷！！！5.github上的自己的distributed Filesystem继续coding继续维护
-之">
+<meta name="description" content="序言最近被拉来搞前端了，写篇博客记录下学习的过程，因为之前前端接触的不多，以为前端的开发只是切图调调布局啥的活，最近深入搞了下才发现，前端的技术栈确实加了不少。而且已经不单单只是一种“写写前端效果的语言”了，自从nodejs的出现，把javascript的fs http package等部分补全，以及ES6的标准完善，javascript的地位现在是越来越高了。
+目录
+javascript的历史">
 <meta property="og:type" content="article">
-<meta property="og:title" content="博客转到github上来啦">
-<meta property="og:url" content="http://yoursite.com/2015/05/21/博客转到github上来啦/index.html">
+<meta property="og:title" content="javascript 学习总结">
+<meta property="og:url" content="http://yoursite.com/2015/10/16/javascript-学习总结/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="今天是5.21，昨天把gitpages+hexo的博客给搭建完成。最近过的挺颓废的，需要重新整理下自己。因为六月底要去阿里实习了，这段时间要做的事情其实还挺多的，稍微列举下。1.把蓝杰的云计算教程写完（我会同步到博客上）2.把手头的外包接得活全部理清3.把学校的各种杂事安排好4.算法导论，刷刷刷！！！5.github上的自己的distributed Filesystem继续coding继续维护
-之">
+<meta property="og:description" content="序言最近被拉来搞前端了，写篇博客记录下学习的过程，因为之前前端接触的不多，以为前端的开发只是切图调调布局啥的活，最近深入搞了下才发现，前端的技术栈确实加了不少。而且已经不单单只是一种“写写前端效果的语言”了，自从nodejs的出现，把javascript的fs http package等部分补全，以及ES6的标准完善，javascript的地位现在是越来越高了。
+目录
+javascript的历史">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="博客转到github上来啦">
-<meta name="twitter:description" content="今天是5.21，昨天把gitpages+hexo的博客给搭建完成。最近过的挺颓废的，需要重新整理下自己。因为六月底要去阿里实习了，这段时间要做的事情其实还挺多的，稍微列举下。1.把蓝杰的云计算教程写完（我会同步到博客上）2.把手头的外包接得活全部理清3.把学校的各种杂事安排好4.算法导论，刷刷刷！！！5.github上的自己的distributed Filesystem继续coding继续维护
-之">
+<meta name="twitter:title" content="javascript 学习总结">
+<meta name="twitter:description" content="序言最近被拉来搞前端了，写篇博客记录下学习的过程，因为之前前端接触的不多，以为前端的开发只是切图调调布局啥的活，最近深入搞了下才发现，前端的技术栈确实加了不少。而且已经不单单只是一种“写写前端效果的语言”了，自从nodejs的出现，把javascript的fs http package等部分补全，以及ES6的标准完善，javascript的地位现在是越来越高了。
+目录
+javascript的历史">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -60,7 +63,7 @@
 
 
 
-  <title> 博客转到github上来啦 | Hexo </title>
+  <title> javascript 学习总结 | Hexo </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="">
@@ -169,7 +172,7 @@
           
           
             
-              博客转到github上来啦
+              javascript 学习总结
             
           
         </h1>
@@ -178,8 +181,8 @@
       <div class="post-meta">
         <span class="post-time">
           發表於
-          <time itemprop="dateCreated" datetime="2015-05-21T14:42:37+08:00" content="2015-05-21">
-            2015-05-21
+          <time itemprop="dateCreated" datetime="2015-10-16T11:30:25+08:00" content="2015-10-16">
+            2015-10-16
           </time>
         </span>
 
@@ -198,8 +201,30 @@
       
 
       
-        <span itemprop="articleBody"><p>今天是5.21，昨天把gitpages+hexo的博客给搭建完成。最近过的挺颓废的，需要重新整理下自己。因为六月底要去阿里实习了，这段时间要做的事情其实还挺多的，稍微列举下。<br>1.把蓝杰的云计算教程写完（我会同步到博客上）<br>2.把手头的外包接得活全部理清<br>3.把学校的各种杂事安排好<br>4.算法导论，刷刷刷！！！<br>5.github上的自己的distributed Filesystem继续coding继续维护</p>
-<p>之前的一些文章大家可以看 <a href="http://linhaoxiang.iteye.com/" target="_blank" rel="external">http://linhaoxiang.iteye.com/</a><br>ps:大半年前写的文章了，那是还是个大一的渣渣。。。。</p>
+        <span itemprop="articleBody"><h2 id="序言">序言</h2><p>最近被拉来搞前端了，写篇博客记录下学习的过程，因为之前前端接触的不多，以为前端的开发只是切图调调布局啥的活，最近深入搞了下才发现，前端的技术栈确实加了不少。而且已经不单单只是一种“写写前端效果的语言”了，自从nodejs的出现，把javascript的fs http package等部分补全，以及ES6的标准完善，javascript的地位现在是越来越高了。</p>
+<h2 id="目录">目录</h2><ul>
+<li><p><a href="#1">javascript的历史</a></p>
+</li>
+<li><p><a href="#3">对象和函数</a></p>
+</li>
+<li><p><a href="#5">闭包</a></p>
+</li>
+<li><p><a href="#7">继承和原型链</a></p>
+</li>
+<li><p><a href="#8">内存管理和解释器</a></p>
+</li>
+<li><p><a href="#9">严格模式</a></p>
+</li>
+<li><p><a href="#10">异步编程</a></p>
+</li>
+<li><p><a href="#11">Generator and Promise</a></p>
+</li>
+</ul>
+<h2 id="1">javascript的历史</h2><br>说下javascript的历史，首先要澄清下，它和java并没有任何的关系。<br><br>在1995 年 Netscape 一位名为 Brendan Eich 的员工创造了JavaScript，随后在 1996 年初，JavaScript 首先被应用于 Netscape 2 浏览器上。最初的 JavaScript 名为 LiveScript，后来因为 Sun Microsystem 的 Java 语言的兴起和广泛使用，Netscape 出于宣传和推广的考虑，将它的名字从最初的 LiveScript 更改为 JavaScript——尽管两者之间并没有什么共同点。这便是之后混淆产生的根源。<br><br><br><br>几个月后，Microsoft 随着 IE 3 推出了一个与之基本兼容的语言 JScript。Netscape 将 JavaScript 提交至 Ecma International（一个欧洲标准化组织），ECMAScript 标准第一版便在 1997 年诞生了，随后在 1999 年以 ECMAScript 第三版的形式进行了更新，从那之后这个标准没有发生过大的改动。由于委员会在语言特性的讨论上发生分歧，ECMAScript 第四版尚未推出便被废除，但随后于 2009 年 12 月发布的 ECMAScript 第五版引入了第四版草案加入的许多特性。第六版标准已经于2015年六月发布。<br><br><br><br><br><br>和java C C++等语言不同的是，首先像java他是运行在JVM虚拟机上的，然而javascript只能运行在浏览器中，这也是一种方便，就是说你的pc上只要有浏览器，就能进行javascript的编程。而且javascript还是一门OOP语言，也包含了封装，继承，多态的概念，不过没有类的概念。<br><br><h2 id="3">对象和函数</h2>
+
+
+
+
 </span>
       
     </div>
@@ -211,11 +236,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/09/29/我的大学/" rel="prev">我的大学</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/29/我的大学/" rel="next">我的大学</a>
             
           </div>
         </div>
@@ -329,7 +354,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">此文章未包含目錄</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#序言"><span class="nav-number">1.</span> <span class="nav-text">序言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">2.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1"><span class="nav-number">3.</span> <span class="nav-text">javascript的历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3"><span class="nav-number">4.</span> <span class="nav-text">对象和函数</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
