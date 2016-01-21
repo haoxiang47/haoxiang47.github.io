@@ -37,18 +37,15 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="今天是5.21，昨天把gitpages+hexo的博客给搭建完成。最近过的挺颓废的，需要重新整理下自己。因为六月底要去阿里实习了，这段时间要做的事情其实还挺多的，稍微列举下。1.把蓝杰的云计算教程写完（我会同步到博客上）2.把手头的外包接得活全部理清3.把学校的各种杂事安排好4.算法导论，刷刷刷！！！5.github上的自己的distributed Filesystem继续coding继续维护
-之">
+<meta name="description" content="序言这系列的博客是来记录我的分布式系统的学习笔记。说起来其实在大一就开始接触分布式了，从最开始的hadoop，mapreduce，到spark，storm。然后接触的大数据等等。不过一直都是自己从网上找资料或者在实习当中学习到的知识，一直没有一个系统的知识梳理。前段时间看到了mit的这个课程，简直感慨万千。野路子走惯了，真心需要学院派的系统指导来帮自己梳理计算机的知识体系了。所以这一系列的博客来记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="博客转到github上来啦">
-<meta property="og:url" content="http://yoursite.com/2015/05/21/博客转到github上来啦/index.html">
+<meta property="og:title" content="MIT-6.824 学习笔记(一)">
+<meta property="og:url" content="http://yoursite.com/2016/01/08/MIT-6-824-学习笔记-一/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="今天是5.21，昨天把gitpages+hexo的博客给搭建完成。最近过的挺颓废的，需要重新整理下自己。因为六月底要去阿里实习了，这段时间要做的事情其实还挺多的，稍微列举下。1.把蓝杰的云计算教程写完（我会同步到博客上）2.把手头的外包接得活全部理清3.把学校的各种杂事安排好4.算法导论，刷刷刷！！！5.github上的自己的distributed Filesystem继续coding继续维护
-之">
+<meta property="og:description" content="序言这系列的博客是来记录我的分布式系统的学习笔记。说起来其实在大一就开始接触分布式了，从最开始的hadoop，mapreduce，到spark，storm。然后接触的大数据等等。不过一直都是自己从网上找资料或者在实习当中学习到的知识，一直没有一个系统的知识梳理。前段时间看到了mit的这个课程，简直感慨万千。野路子走惯了，真心需要学院派的系统指导来帮自己梳理计算机的知识体系了。所以这一系列的博客来记">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="博客转到github上来啦">
-<meta name="twitter:description" content="今天是5.21，昨天把gitpages+hexo的博客给搭建完成。最近过的挺颓废的，需要重新整理下自己。因为六月底要去阿里实习了，这段时间要做的事情其实还挺多的，稍微列举下。1.把蓝杰的云计算教程写完（我会同步到博客上）2.把手头的外包接得活全部理清3.把学校的各种杂事安排好4.算法导论，刷刷刷！！！5.github上的自己的distributed Filesystem继续coding继续维护
-之">
+<meta name="twitter:title" content="MIT-6.824 学习笔记(一)">
+<meta name="twitter:description" content="序言这系列的博客是来记录我的分布式系统的学习笔记。说起来其实在大一就开始接触分布式了，从最开始的hadoop，mapreduce，到spark，storm。然后接触的大数据等等。不过一直都是自己从网上找资料或者在实习当中学习到的知识，一直没有一个系统的知识梳理。前段时间看到了mit的这个课程，简直感慨万千。野路子走惯了，真心需要学院派的系统指导来帮自己梳理计算机的知识体系了。所以这一系列的博客来记">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -60,7 +57,7 @@
 
 
 
-  <title> 博客转到github上来啦 | Hexo </title>
+  <title> MIT-6.824 学习笔记(一) | Hexo </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="">
@@ -169,7 +166,7 @@
           
           
             
-              博客转到github上来啦
+              MIT-6.824 学习笔记(一)
             
           
         </h1>
@@ -178,8 +175,8 @@
       <div class="post-meta">
         <span class="post-time">
           發表於
-          <time itemprop="dateCreated" datetime="2015-05-21T14:42:37+08:00" content="2015-05-21">
-            2015-05-21
+          <time itemprop="dateCreated" datetime="2016-01-08T00:46:30+08:00" content="2016-01-08">
+            2016-01-08
           </time>
         </span>
 
@@ -198,8 +195,22 @@
       
 
       
-        <span itemprop="articleBody"><p>今天是5.21，昨天把gitpages+hexo的博客给搭建完成。最近过的挺颓废的，需要重新整理下自己。因为六月底要去阿里实习了，这段时间要做的事情其实还挺多的，稍微列举下。<br>1.把蓝杰的云计算教程写完（我会同步到博客上）<br>2.把手头的外包接得活全部理清<br>3.把学校的各种杂事安排好<br>4.算法导论，刷刷刷！！！<br>5.github上的自己的distributed Filesystem继续coding继续维护</p>
-<p>之前的一些文章大家可以看 <a href="http://linhaoxiang.iteye.com/" target="_blank" rel="external">http://linhaoxiang.iteye.com/</a><br>ps:大半年前写的文章了，那是还是个大一的渣渣。。。。</p>
+        <span itemprop="articleBody"><h2 id="序言">序言</h2><p>这系列的博客是来记录我的分布式系统的学习笔记。说起来其实在大一就开始接触分布式了，从最开始的hadoop，mapreduce，到spark，storm。然后接触的大数据等等。不过一直都是自己从网上找资料或者在实习当中学习到的知识，一直没有一个系统的知识梳理。前段时间看到了<a href="http://nil.csail.mit.edu/6.824/2015/schedule.html" target="_blank" rel="external">mit的这个课程</a>，简直感慨万千。野路子走惯了，真心需要学院派的系统指导来帮自己梳理计算机的知识体系了。所以这一系列的博客来记录这一阶段的学习历程，就当做是学习笔记了。</p>
+<h2 id="目录">目录</h2><p>一. Mpareduce和Lab 1 思路</p>
+<p>二. RPC 和 GO</p>
+<p>三. Lab 2 思路（主备和容错）</p>
+<p>四.Paxos协议</p>
+<p>五.Lab 3 思路</p>
+<p>六.未完待续</p>
+<h2 id="Lab_Overview">Lab Overview</h2><p>因为是学习笔记，所以很多东西不会写的很详细。Mapreduce因为之前用的很多了，这里就不细的展开了，主要说下课程的lab，这也是我觉得最有价值的地方。</p>
+<p>MIT-6.824的实验分为5个部分，整个项目用golang来实现，testcase都已经给出。最终会实现一个key/value的 services,支持三个RPC请求，<em>Put(),Append(),Get()</em>。实现一个简单的<em>K/V的分布式数据库</em>。</p>
+<ul>
+<li>Lab 1 要求实现一个Mapreduce的lib，接口已经给出了。这个主要就是根据google的那篇论文来实现。并且还要求实现一个任务的分配系统。也就是简单的hadoop的yarn，并且要能简单的容错</li>
+<li>Lab 2 分为两部分。最后会做出一个K/V services的雏形，用主从复制来实现。有点hadoop中master/worker的雏形。其中part A会实现一个viewservice。part B会开始实现K/V services</li>
+<li>Lab 3 会让你把Paxos的内容给你的K/V services给加上。Part A让你实现Paxos的lib，Part B让你实现有Paxos的K/V services</li>
+<li>Lab 4 这里会让你实现 K/V的存储系统。原理应该就是根据partition和group来切分和归类数据</li>
+<li>Lab 5 就是让你整合所有的内容，来真正实现这个K/V的分布式数据库，具体的细节可以有很多，自己可以扩展</li>
+</ul>
 </span>
       
     </div>
@@ -211,11 +222,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/09/29/我的大学/" rel="prev">我的大学</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/31/写在2015的最后一天/" rel="next">写在2015的最后一天</a>
             
           </div>
         </div>
@@ -329,7 +340,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">此文章未包含目錄</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#序言"><span class="nav-number">1.</span> <span class="nav-text">序言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">2.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lab_Overview"><span class="nav-number">3.</span> <span class="nav-text">Lab Overview</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

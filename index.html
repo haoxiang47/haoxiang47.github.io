@@ -168,6 +168,225 @@
           
           
             
+              <a class="post-title-link" href="/2016/01/08/MIT-6-824-学习笔记-一/" itemprop="url">
+                MIT-6.824 学习笔记(一)
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2016-01-08T00:46:30+08:00" content="2016-01-08">
+            2016-01-08
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h2 id="序言">序言</h2><p>这系列的博客是来记录我的分布式系统的学习笔记。说起来其实在大一就开始接触分布式了，从最开始的hadoop，mapreduce，到spark，storm。然后接触的大数据等等。不过一直都是自己从网上找资料或者在实习当中学习到的知识，一直没有一个系统的知识梳理。前段时间看到了<a href="http://nil.csail.mit.edu/6.824/2015/schedule.html" target="_blank" rel="external">mit的这个课程</a>，简直感慨万千。野路子走惯了，真心需要学院派的系统指导来帮自己梳理计算机的知识体系了。所以这一系列的博客来记录这一阶段的学习历程，就当做是学习笔记了。</p>
+<h2 id="目录">目录</h2><p>一. Mpareduce和Lab 1 思路</p>
+<p>二. RPC 和 GO</p>
+<p>三. Lab 2 思路（主备和容错）</p>
+<p>四.Paxos协议</p>
+<p>五.Lab 3 思路</p>
+<p>六.未完待续</p>
+<h2 id="Lab_Overview">Lab Overview</h2><p>因为是学习笔记，所以很多东西不会写的很详细。Mapreduce因为之前用的很多了，这里就不细的展开了，主要说下课程的lab，这也是我觉得最有价值的地方。</p>
+<p>MIT-6.824的实验分为5个部分，整个项目用golang来实现，testcase都已经给出。最终会实现一个key/value的 services,支持三个RPC请求，<em>Put(),Append(),Get()</em>。实现一个简单的<em>K/V的分布式数据库</em>。</p>
+<ul>
+<li>Lab 1 要求实现一个Mapreduce的lib，接口已经给出了。这个主要就是根据google的那篇论文来实现。并且还要求实现一个任务的分配系统。也就是简单的hadoop的yarn，并且要能简单的容错</li>
+<li>Lab 2 分为两部分。最后会做出一个K/V services的雏形，用主从复制来实现。有点hadoop中master/worker的雏形。其中part A会实现一个viewservice。part B会开始实现K/V services</li>
+<li>Lab 3 会让你把Paxos的内容给你的K/V services给加上。Part A让你实现Paxos的lib，Part B让你实现有Paxos的K/V services</li>
+<li>Lab 4 这里会让你实现 K/V的存储系统。原理应该就是根据partition和group来切分和归类数据</li>
+<li>Lab 5 就是让你整合所有的内容，来真正实现这个K/V的分布式数据库，具体的细节可以有很多，自己可以扩展</li>
+</ul>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/12/31/写在2015的最后一天/" itemprop="url">
+                写在2015的最后一天
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-12-31T03:10:16+08:00" content="2015-12-31">
+            2015-12-31
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>因为早上6点多有高铁要回家，所以果断决定2015的最后一天就不睡了吧。好久没写东西了，发现自从上了大学，没有了语文课，又误入coding这个坑之后，文笔是越来越差了。好歹我也是当年可以靠作文拉分的存在啊！而且当年引以为傲的一手好字，也是退不了不少。</p>
+<p>写东西可以让人思考，深感觉最近脑子CPU用的太少了，只有IO进出。遂决定以此为证，重新开启blog的记录。</p>
+<h2 id="2015">2015</h2><p>一直没有写总结的习惯，然而既然马上就要2016了，就写写2015的总结吧。这一年的我，正好是20岁，这一年的我，感觉眼前的世界越来越大，未来的路越来越长，这一年，我一直在成长。</p>
+<p>细数了下这一年走过的城市。长沙，北京，杭州，上海，深圳，福州。不算太多，但每一个都很重要。其实算了下20年的人生，走过的城市虽不算多，但也不是偏居一偶，只在家里的小山村不问世事。但是真的要说记忆，似乎在2015之前，除了福州，除了家乡，给我留下深刻印象的城市，可以让我有归属感，想待在那里的城市，好像并没有。细思了一下，2015之前，除了福州之外，待得最久的城市竟然是东京！而在高中之前的我，却又是很讨厌日本这个国度的（小时候那莫名的爱国情怀吧）。这样想来也是无奈，明明向往自由的我，自己的足迹竟然如此匮乏。</p>
+<p>不过这一年倒是有了转折，准确的说应该是2014的7月开始吧。2015，有归属感的城市，应该要多了半个，杭州。算起来，我的2015，似乎有一半是在杭州度过的了。</p>
+<p>长沙，焦糖，那群可爱的人，那间记忆中的出租屋。杭州，阿里，一堆优秀的可爱的人，一群可以聊通宵的伙伴。这两个地方，两段记忆，占据了我的大部分2015.</p>
+<h3 id="创业的那群焦糖er">创业的那群焦糖er</h3><p>一年前的今天，应该是在阳光100三期2栋的7层度过的。犹记得，那时候的我，即将跨年的时候还在给投资人发BP，记得发完应该已经是晚上8点了，我一个人在那间出租屋里，突然窗外绽放了烟火。我才记起来又是橘子洲放烟花了，才猛然惊醒已经要跨年了。那时候望了下空荡荡的出租屋，尽管自己不矫情，但还是有种孤单和失落感。不过这种感觉并没有持续多久，10点的时候，伯霖和炜燊从酒吧回来，11点的时候，家园和伽玛也来了，当场就打开投影仪开始放电影，12点到，几个人干了纸杯中的RIO，那一刻，只有一种感觉：认识你们真好。</p>
+<p>这就是第一次创业之后的感觉，再回首，抛开当初的雄心壮志，抛开项目本身，抛开各种O2O,抛开BP，收获最大的，就是这群可爱的人啊！可爱的焦糖er。至于为何叫焦糖er呢，因为最早的时候一群人是学校里面的一间咖啡馆度过了一个个通宵。正好当初公司的名字也是在那里取的，思来想去也没有想好叫什么，看了看桌子上的咖啡，说就叫焦糖科技公司好了。。。所以公司名字就这么随意的被定了下来=。=</p>
+<h3 id="阿里的那群小伙伴">阿里的那群小伙伴</h3><p>三月份的时候误打误撞投了个简历，没想到面试一切顺利。原本并没有想拿到offer的，因为那时候还在创业。反正就这样让我拿到了蚂蚁的实习机会，也算是阴差阳错吧。之后逐渐退出创业圈，开始接触了校招圈（姑且这么称呼他吧）那时候建了个微信群，让拿了阿里offer的小伙伴加入，原本以为只是把身边的几个小伙伴拉进来，到了实习的时候照应下，没想到群越来越大，最后已经500人满了。正是如此，让我在杭州的生活精彩了不少。</p>
+<p>刚到杭州的时候为了安家，不得不租个房子了，当时的想法是微信群里那么多小伙伴，我一个人住实在太无聊了，就租了个三室的房子，然后再群里招租，最后竟然是6个小伙伴，4男2女一起住。也是让实习下班之后的生活精彩了不少。阿龟，周楠，华杰，青青，宏钊。还有曾经借宿的宏钊女票和周楠学弟。想着每天8点半，每个人都睡眼朦胧的起床，阿龟和周楠默默挤公交去西溪，剩下的四只轮流打Uber去支付宝。每天晚上不出意外华杰肯定第一个到家，剩下的人基本都是10点以后回家。然后开始洗漱之后的喝酒宵夜聊天吹逼。吐槽阿里，聊各个BU八卦，聊群里的网红，聊各自的人生经历，聊各自的未来，聊周末一起去哪里浪。那时候的日子，虽然每天加班到死，但依旧很开心，很精彩。</p>
+<h2 id="2016_你好">2016 你好</h2><p>今年妈妈的农历生日正好是在元旦，就回家一趟。想来大学以来回家的次数也是屈指可数，似乎每个假期都没怎么在家。尽管元旦回来就要考试了，不过现在似乎考试已经让我波澜不惊了=。=</p>
+<p>今年的跨年难得的可以在家里过，可能会和爹娘好好聊聊天吧。毕竟这两年多的大学让我成长了很多，见得多了，思考的就多。</p>
+<p>想想2016，自己应该还是会不断成长吧。思来想去，可能就两点：</p>
+<ul>
+<li>去更远的地方，看更大的世界，让自己的世界观变得更大</li>
+<li>看更多的书，学更多的知识，让自己的内心不断充足</li>
+</ul>
+<h3 id="2016_加油!">2016 加油!</h3></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/12/14/分布式协议浅析/" itemprop="url">
+                分布式协议浅析
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-12-14T01:22:51+08:00" content="2015-12-14">
+            2015-12-14
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/09/29/我的大学/" itemprop="url">
                 我的大学
               </a>
@@ -333,7 +552,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -391,7 +610,7 @@
       <div class="footer-inner"> <div class="copyright" >
   
   &copy; &nbsp; 
-  <span itemprop="copyrightYear">2015</span>
+  <span itemprop="copyrightYear">2016</span>
   <span class="with-love">
     <i class="icon-next-heart"></i>
   </span>
