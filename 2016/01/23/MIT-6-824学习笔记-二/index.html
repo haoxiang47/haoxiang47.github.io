@@ -37,18 +37,18 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="今天是5.21，昨天把gitpages+hexo的博客给搭建完成。最近过的挺颓废的，需要重新整理下自己。因为六月底要去阿里实习了，这段时间要做的事情其实还挺多的，稍微列举下。1.把蓝杰的云计算教程写完（我会同步到博客上）2.把手头的外包接得活全部理清3.把学校的各种杂事安排好4.算法导论，刷刷刷！！！5.github上的自己的distributed Filesystem继续coding继续维护
-之">
+<meta name="description" content="这是学习笔记的第二篇，这篇主要是记录我完成MIT-6.824 lab 2 的思路和想法
+Lab2 Overview这部分的实验主要会实现容错的机制并且完成一个K/V service的雏形。容错的机制其实就是用主备系统来实现。这里用一种叫viewservice的server来完成lab。viewservice会不断监控每一个server是否还alive，如果primary server或者backu">
 <meta property="og:type" content="article">
-<meta property="og:title" content="博客转到github上来啦">
-<meta property="og:url" content="http://yoursite.com/2015/05/21/博客转到github上来啦/index.html">
+<meta property="og:title" content="MIT-6.824学习笔记(二)">
+<meta property="og:url" content="http://yoursite.com/2016/01/23/MIT-6-824学习笔记-二/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="今天是5.21，昨天把gitpages+hexo的博客给搭建完成。最近过的挺颓废的，需要重新整理下自己。因为六月底要去阿里实习了，这段时间要做的事情其实还挺多的，稍微列举下。1.把蓝杰的云计算教程写完（我会同步到博客上）2.把手头的外包接得活全部理清3.把学校的各种杂事安排好4.算法导论，刷刷刷！！！5.github上的自己的distributed Filesystem继续coding继续维护
-之">
+<meta property="og:description" content="这是学习笔记的第二篇，这篇主要是记录我完成MIT-6.824 lab 2 的思路和想法
+Lab2 Overview这部分的实验主要会实现容错的机制并且完成一个K/V service的雏形。容错的机制其实就是用主备系统来实现。这里用一种叫viewservice的server来完成lab。viewservice会不断监控每一个server是否还alive，如果primary server或者backu">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="博客转到github上来啦">
-<meta name="twitter:description" content="今天是5.21，昨天把gitpages+hexo的博客给搭建完成。最近过的挺颓废的，需要重新整理下自己。因为六月底要去阿里实习了，这段时间要做的事情其实还挺多的，稍微列举下。1.把蓝杰的云计算教程写完（我会同步到博客上）2.把手头的外包接得活全部理清3.把学校的各种杂事安排好4.算法导论，刷刷刷！！！5.github上的自己的distributed Filesystem继续coding继续维护
-之">
+<meta name="twitter:title" content="MIT-6.824学习笔记(二)">
+<meta name="twitter:description" content="这是学习笔记的第二篇，这篇主要是记录我完成MIT-6.824 lab 2 的思路和想法
+Lab2 Overview这部分的实验主要会实现容错的机制并且完成一个K/V service的雏形。容错的机制其实就是用主备系统来实现。这里用一种叫viewservice的server来完成lab。viewservice会不断监控每一个server是否还alive，如果primary server或者backu">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -60,7 +60,7 @@
 
 
 
-  <title> 博客转到github上来啦 | Hexo </title>
+  <title> MIT-6.824学习笔记(二) | Hexo </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="">
@@ -169,7 +169,7 @@
           
           
             
-              博客转到github上来啦
+              MIT-6.824学习笔记(二)
             
           
         </h1>
@@ -178,8 +178,8 @@
       <div class="post-meta">
         <span class="post-time">
           發表於
-          <time itemprop="dateCreated" datetime="2015-05-21T14:42:37+08:00" content="2015-05-21">
-            2015-05-21
+          <time itemprop="dateCreated" datetime="2016-01-23T21:39:30+08:00" content="2016-01-23">
+            2016-01-23
           </time>
         </span>
 
@@ -198,8 +198,27 @@
       
 
       
-        <span itemprop="articleBody"><p>今天是5.21，昨天把gitpages+hexo的博客给搭建完成。最近过的挺颓废的，需要重新整理下自己。因为六月底要去阿里实习了，这段时间要做的事情其实还挺多的，稍微列举下。<br>1.把蓝杰的云计算教程写完（我会同步到博客上）<br>2.把手头的外包接得活全部理清<br>3.把学校的各种杂事安排好<br>4.算法导论，刷刷刷！！！<br>5.github上的自己的distributed Filesystem继续coding继续维护</p>
-<p>之前的一些文章大家可以看 <a href="http://linhaoxiang.iteye.com/" target="_blank" rel="external">http://linhaoxiang.iteye.com/</a><br>ps:大半年前写的文章了，那是还是个大一的渣渣。。。。</p>
+        <span itemprop="articleBody"><p>这是学习笔记的第二篇，这篇主要是记录我完成MIT-6.824 lab 2 的思路和想法</p>
+<h2 id="Lab2_Overview">Lab2 Overview</h2><p>这部分的实验主要会实现容错的机制并且完成一个K/V service的雏形。容错的机制其实就是用主备系统来实现。这里用一种叫viewservice的server来完成lab。viewservice会不断监控每一个server是否还alive，如果primary server或者backup server出现问题，就采取对应的措施。如果primary挂了，就会让一个backup取代成为primary。如果一个backup挂了，并且“集群”中海油空闲的server，就会让他变成backup。这时候primary会把自己完整的database内容发送给新的backup，并随后通过Put来验证backup的K/V database是否保持一致性。</p>
+<p>因为这个lab是在单机上模拟的分布式的一些特性，所以一些地方需要注意，比如说这个databases的数据是放在内存里而不是放在disk当中的。以及各个server和client等之间的通信只能通过RPC，而不能通过直接的golang对象或者文本IO来实现。</p>
+<p>因为这是模拟出来的分布式逻辑，所以下面的一些容错机制和限制会导致真正的分布式系统会too weak，比如</p>
+<ul>
+<li>view service是很脆弱的，因为没有复制。这其实就是类似hadoop中的HA的问题。相当于master节点只有一个的话，是很危险的，容易过载。</li>
+<li>像之前说的，一个空闲的sever变成backup的时候，需要从primary复制databses来完成备份的效果，这个是很慢的。尤其当网络不好的时候。</li>
+<li>server并没有将K/V databases存储在disk中， so they can’t survive simultaneous crashes (e.g., a site-wide power failure).</li>
+<li>如果出现暂时性的问题导致primary和backup间的通讯出现延迟或者中断，那么只有两个办法来解决。第一是改变view来将backup移除，或者keep trying。如果通信问题出现的很频繁，那以上两个方法都不好用。</li>
+<li>这个实验的primary/backup结构有些类似 Flat Datacenter Storage和Monge DB，还有Chain Replication，当然他们的设计和实现更详细。</li>
+</ul>
+<h2 id="Part_A">Part A</h2><p>好了首先我们来实现这个View Service，就是完成primary/backup结构。<br>整体思路大概是这样的，client和server通过Ping()方法，也就是RPC请求来通信。client向view server发送的ping带两个参数，me:string,viewnum:int 也就是client的name和viewnum。其中me用来判断是primary还是backup或者是空闲的server。viewnum用来判断是否现在的primary已经被知晓。</p>
+<p>从上面的逻辑我们可以很简单的完成client的代码，其实工程中很多的方法和接口已经写好了，核心部分我们只要完成viewservice/client.go 中的Ping()方法就行。如下：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> (ck *Clerk) Ping(viewnum <span class="typename">uint</span>) (View, error) &#123;</span><br><span class="line">	<span class="comment">// prepare the arguments.</span></span><br><span class="line">	args := &amp;PingArgs&#123;&#125;</span><br><span class="line">	args.Me = ck.me</span><br><span class="line">	args.Viewnum = viewnum</span><br><span class="line">	<span class="keyword">var</span> reply PingReply</span><br><span class="line"></span><br><span class="line">	<span class="comment">// send an RPC request, wait for the reply.</span></span><br><span class="line">	ok := call(ck.server, <span class="string">"ViewServer.Ping"</span>, args, &amp;reply)</span><br><span class="line">	<span class="keyword">if</span> ok == <span class="constant">false</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> View&#123;&#125;, fmt.Errorf(<span class="string">"Ping(%v) failed"</span>, viewnum)</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> reply.View, <span class="constant">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后是服务端接收到ping并且得到传来的参数后作出的反应。在viewservice/server.go中。如下：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> (vs *ViewServer) Ping(args *PingArgs, reply *PingReply) error &#123;</span><br><span class="line">		id, viewnum := args.Me,args.Viewnum</span><br><span class="line">	<span class="keyword">switch</span> id &#123;</span><br><span class="line">		<span class="keyword">case</span> vs.curr.Primary:</span><br><span class="line">			<span class="keyword">if</span> viewnum == vs.curr.Viewnum &#123;</span><br><span class="line">				vs.hasPrimaryAcked = <span class="constant">true</span></span><br><span class="line">				vs.lastSeen[vs.curr.Primary] = time.Now()</span><br><span class="line">			&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">				vs.promoteBackup()</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">case</span> vs.curr.Backup:</span><br><span class="line">			<span class="keyword">if</span> viewnum == vs.curr.Viewnum &#123;</span><br><span class="line">				vs.lastSeen[vs.curr.Backup] = time.Now()</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				vs.removeBackup()</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">default</span> :</span><br><span class="line">			vs.addServer(id)</span><br><span class="line">	&#125;</span><br><span class="line">		reply.View = vs.curr</span><br><span class="line">		<span class="keyword">return</span> <span class="constant">nil</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主要就是根据me和viewnum来判断情况。如果me是primary，则判断viewnum是否和现在的viewnum相同，相同则说明primary已经被ack了，记下时间。不同则说明现在的primary可能已经挂了。就要将backup变成primary，执行promoteBackup(）函数。</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">func</span> (vs *ViewServer) promoteBackup() <span class="typename">bool</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> !vs.hasPrimaryAcked &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="constant">false</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> vs.curr.Backup == <span class="string">""</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="constant">false</span></span><br><span class="line">	&#125;</span><br><span class="line">	vs.changeView(vs.curr.Viewnum+<span class="number">1</span>, vs.curr.Backup, <span class="string">""</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="constant">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若是me是backup，则判断viewnum和现在的是否相等。不等的话就移除这个backup。</p>
+<h3 id="Part_B">Part B</h3><p>这部分就是在之前primary/backup的基础上，加上K/V service。未完待续！</p>
+<h3 id="Golang_RPC">Golang RPC</h3><p>未完待续！</p>
 </span>
       
     </div>
@@ -211,11 +230,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/09/29/我的大学/" rel="prev">我的大学</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/08/MIT-6-824-学习笔记-一/" rel="next">MIT-6.824 学习笔记(一)</a>
             
           </div>
         </div>
@@ -329,7 +348,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">此文章未包含目錄</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Lab2_Overview"><span class="nav-number">1.</span> <span class="nav-text">Lab2 Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part_A"><span class="nav-number">2.</span> <span class="nav-text">Part A</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Part_B"><span class="nav-number">2.1.</span> <span class="nav-text">Part B</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Golang_RPC"><span class="nav-number">2.2.</span> <span class="nav-text">Golang RPC</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
