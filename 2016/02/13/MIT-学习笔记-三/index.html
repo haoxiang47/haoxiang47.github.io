@@ -37,21 +37,18 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="因为早上6点多有高铁要回家，所以果断决定2015的最后一天就不睡了吧。好久没写东西了，发现自从上了大学，没有了语文课，又误入coding这个坑之后，文笔是越来越差了。好歹我也是当年可以靠作文拉分的存在啊！而且当年引以为傲的一手好字，也是退不了不少。
-写东西可以让人思考，深感觉最近脑子CPU用的太少了，只有IO进出。遂决定以此为证，重新开启blog的记录。
-2015一直没有写总结的习惯，然而既然马上">
+<meta name="description" content="PaxosLab3的内容呢就是让你把K/V service实现Paxos。这里就不得不说到大名鼎鼎的Paxos了，所以这里应该会有较大篇幅讲一讲Paxos，包括衍伸出来的CAP理论，两端提交协议，拜占庭将军问题等等。至于lab的内容因为实验的wiki上已经给了伪代码实现了，所以其实并不复杂，不过理解Paxos那可是费了大力气。
+CAP理论首先要说Paxos就要先说下CAP。首先CAP是针对于分布式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="写在2015的最后一天">
-<meta property="og:url" content="http://yoursite.com/2015/12/31/写在2015的最后一天/index.html">
+<meta property="og:title" content="MIT-学习笔记-三">
+<meta property="og:url" content="http://yoursite.com/2016/02/13/MIT-学习笔记-三/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="因为早上6点多有高铁要回家，所以果断决定2015的最后一天就不睡了吧。好久没写东西了，发现自从上了大学，没有了语文课，又误入coding这个坑之后，文笔是越来越差了。好歹我也是当年可以靠作文拉分的存在啊！而且当年引以为傲的一手好字，也是退不了不少。
-写东西可以让人思考，深感觉最近脑子CPU用的太少了，只有IO进出。遂决定以此为证，重新开启blog的记录。
-2015一直没有写总结的习惯，然而既然马上">
+<meta property="og:description" content="PaxosLab3的内容呢就是让你把K/V service实现Paxos。这里就不得不说到大名鼎鼎的Paxos了，所以这里应该会有较大篇幅讲一讲Paxos，包括衍伸出来的CAP理论，两端提交协议，拜占庭将军问题等等。至于lab的内容因为实验的wiki上已经给了伪代码实现了，所以其实并不复杂，不过理解Paxos那可是费了大力气。
+CAP理论首先要说Paxos就要先说下CAP。首先CAP是针对于分布式">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="写在2015的最后一天">
-<meta name="twitter:description" content="因为早上6点多有高铁要回家，所以果断决定2015的最后一天就不睡了吧。好久没写东西了，发现自从上了大学，没有了语文课，又误入coding这个坑之后，文笔是越来越差了。好歹我也是当年可以靠作文拉分的存在啊！而且当年引以为傲的一手好字，也是退不了不少。
-写东西可以让人思考，深感觉最近脑子CPU用的太少了，只有IO进出。遂决定以此为证，重新开启blog的记录。
-2015一直没有写总结的习惯，然而既然马上">
+<meta name="twitter:title" content="MIT-学习笔记-三">
+<meta name="twitter:description" content="PaxosLab3的内容呢就是让你把K/V service实现Paxos。这里就不得不说到大名鼎鼎的Paxos了，所以这里应该会有较大篇幅讲一讲Paxos，包括衍伸出来的CAP理论，两端提交协议，拜占庭将军问题等等。至于lab的内容因为实验的wiki上已经给了伪代码实现了，所以其实并不复杂，不过理解Paxos那可是费了大力气。
+CAP理论首先要说Paxos就要先说下CAP。首先CAP是针对于分布式">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -63,7 +60,7 @@
 
 
 
-  <title> 写在2015的最后一天 | Hexo </title>
+  <title> MIT-学习笔记-三 | Hexo </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="">
@@ -172,7 +169,7 @@
           
           
             
-              写在2015的最后一天
+              MIT-学习笔记-三
             
           
         </h1>
@@ -181,8 +178,8 @@
       <div class="post-meta">
         <span class="post-time">
           發表於
-          <time itemprop="dateCreated" datetime="2015-12-31T03:10:16+08:00" content="2015-12-31">
-            2015-12-31
+          <time itemprop="dateCreated" datetime="2016-02-13T12:23:51+08:00" content="2016-02-13">
+            2016-02-13
           </time>
         </span>
 
@@ -201,24 +198,26 @@
       
 
       
-        <span itemprop="articleBody"><p>因为早上6点多有高铁要回家，所以果断决定2015的最后一天就不睡了吧。好久没写东西了，发现自从上了大学，没有了语文课，又误入coding这个坑之后，文笔是越来越差了。好歹我也是当年可以靠作文拉分的存在啊！而且当年引以为傲的一手好字，也是退不了不少。</p>
-<p>写东西可以让人思考，深感觉最近脑子CPU用的太少了，只有IO进出。遂决定以此为证，重新开启blog的记录。</p>
-<h2 id="2015">2015</h2><p>一直没有写总结的习惯，然而既然马上就要2016了，就写写2015的总结吧。这一年的我，正好是20岁，这一年的我，感觉眼前的世界越来越大，未来的路越来越长，这一年，我一直在成长。</p>
-<p>细数了下这一年走过的城市。长沙，北京，杭州，上海，深圳，福州。不算太多，但每一个都很重要。其实算了下20年的人生，走过的城市虽不算多，但也不是偏居一偶，只在家里的小山村不问世事。但是真的要说记忆，似乎在2015之前，除了福州，除了家乡，给我留下深刻印象的城市，可以让我有归属感，想待在那里的城市，好像并没有。细思了一下，2015之前，除了福州之外，待得最久的城市竟然是东京！而在高中之前的我，却又是很讨厌日本这个国度的（小时候那莫名的爱国情怀吧）。这样想来也是无奈，明明向往自由的我，自己的足迹竟然如此匮乏。</p>
-<p>不过这一年倒是有了转折，准确的说应该是2014的7月开始吧。2015，有归属感的城市，应该要多了半个，杭州。算起来，我的2015，似乎有一半是在杭州度过的了。</p>
-<p>长沙，焦糖，那群可爱的人，那间记忆中的出租屋。杭州，阿里，一堆优秀的可爱的人，一群可以聊通宵的伙伴。这两个地方，两段记忆，占据了我的大部分2015.</p>
-<h3 id="创业的那群焦糖er">创业的那群焦糖er</h3><p>一年前的今天，应该是在阳光100三期2栋的7层度过的。犹记得，那时候的我，即将跨年的时候还在给投资人发BP，记得发完应该已经是晚上8点了，我一个人在那间出租屋里，突然窗外绽放了烟火。我才记起来又是橘子洲放烟花了，才猛然惊醒已经要跨年了。那时候望了下空荡荡的出租屋，尽管自己不矫情，但还是有种孤单和失落感。不过这种感觉并没有持续多久，10点的时候，伯霖和炜燊从酒吧回来，11点的时候，家园和伽玛也来了，当场就打开投影仪开始放电影，12点到，几个人干了纸杯中的RIO，那一刻，只有一种感觉：认识你们真好。</p>
-<p>这就是第一次创业之后的感觉，再回首，抛开当初的雄心壮志，抛开项目本身，抛开各种O2O,抛开BP，收获最大的，就是这群可爱的人啊！可爱的焦糖er。至于为何叫焦糖er呢，因为最早的时候一群人是学校里面的一间咖啡馆度过了一个个通宵。正好当初公司的名字也是在那里取的，思来想去也没有想好叫什么，看了看桌子上的咖啡，说就叫焦糖科技公司好了。。。所以公司名字就这么随意的被定了下来=。=</p>
-<h3 id="阿里的那群小伙伴">阿里的那群小伙伴</h3><p>三月份的时候误打误撞投了个简历，没想到面试一切顺利。原本并没有想拿到offer的，因为那时候还在创业。反正就这样让我拿到了蚂蚁的实习机会，也算是阴差阳错吧。之后逐渐退出创业圈，开始接触了校招圈（姑且这么称呼他吧）那时候建了个微信群，让拿了阿里offer的小伙伴加入，原本以为只是把身边的几个小伙伴拉进来，到了实习的时候照应下，没想到群越来越大，最后已经500人满了。正是如此，让我在杭州的生活精彩了不少。</p>
-<p>刚到杭州的时候为了安家，不得不租个房子了，当时的想法是微信群里那么多小伙伴，我一个人住实在太无聊了，就租了个三室的房子，然后再群里招租，最后竟然是6个小伙伴，4男2女一起住。也是让实习下班之后的生活精彩了不少。阿龟，周楠，华杰，青青，宏钊。还有曾经借宿的宏钊女票和周楠学弟。想着每天8点半，每个人都睡眼朦胧的起床，阿龟和周楠默默挤公交去西溪，剩下的四只轮流打Uber去支付宝。每天晚上不出意外华杰肯定第一个到家，剩下的人基本都是10点以后回家。然后开始洗漱之后的喝酒宵夜聊天吹逼。吐槽阿里，聊各个BU八卦，聊群里的网红，聊各自的人生经历，聊各自的未来，聊周末一起去哪里浪。那时候的日子，虽然每天加班到死，但依旧很开心，很精彩。</p>
-<h2 id="2016_你好">2016 你好</h2><p>今年妈妈的农历生日正好是在元旦，就回家一趟。想来大学以来回家的次数也是屈指可数，似乎每个假期都没怎么在家。尽管元旦回来就要考试了，不过现在似乎考试已经让我波澜不惊了=。=</p>
-<p>今年的跨年难得的可以在家里过，可能会和爹娘好好聊聊天吧。毕竟这两年多的大学让我成长了很多，见得多了，思考的就多。</p>
-<p>想想2016，自己应该还是会不断成长吧。思来想去，可能就两点：</p>
-<ul>
-<li>去更远的地方，看更大的世界，让自己的世界观变得更大</li>
-<li>看更多的书，学更多的知识，让自己的内心不断充足</li>
-</ul>
-<h3 id="2016_加油!">2016 加油!</h3></span>
+        <span itemprop="articleBody"><h2 id="Paxos">Paxos</h2><p>Lab3的内容呢就是让你把K/V service实现Paxos。这里就不得不说到大名鼎鼎的Paxos了，所以这里应该会有较大篇幅讲一讲Paxos，包括衍伸出来的CAP理论，两端提交协议，拜占庭将军问题等等。至于lab的内容因为实验的wiki上已经给了伪代码实现了，所以其实并不复杂，不过理解Paxos那可是费了大力气。</p>
+<h3 id="CAP理论">CAP理论</h3><p>首先要说Paxos就要先说下CAP。首先CAP是针对于分布式环境中的，非分布式的就没这问题了。然后是CAP的三个特性：</p>
+<p>1、C（Consistency）：数据的一致性，是指分布式系统中每个节点中的数据，在同一时刻状态是否是一致的。</p>
+<p>2、A（Aviliability）：系统的可用性，是指当集群中的部分节点出现故障后，系统是否依旧正常运行。</p>
+<p>3、P（Partition Tolerance）：分区容忍性，是指当集群中的节点由于网络分区失去联系后，系统是否依旧正常运行。分区主要强调的是无法通信。此处的“正常运行”需要理解下：正常运行指的是，在没有任何因素影响下的理想状态，不是仅仅单指能否访问、能否回应客户端。</p>
+<p>CAP理论认为<strong>三者不能同时满足</strong>。比如说：如下图：<br>。。。。。<br>所以很多Nosql系统都不得不在这三样中权衡。在分布式系统中，我们一般认为网络故障是常态，就是分区容忍性是一定要保证的，所以要在一致性和可用性当中做权衡。或者是，是在数据一致性和服务延迟之间的权衡。for example .亚马逊的Dynamo是为它的电商平台服务的，阿里的ODPS也是一样，这些服务有个特点，就是在线服务，延迟不能太久，不然你点个购物车一分钟才返回给你数据，那还怎么秒抢双十一？所以这个就必须保证高可用性。然而这里要保证高可用性，就必须进行数据复制。因为分区容忍性是一定要保证的，所以万一一台数据服务器挂了，你必须去备份的服务器读数据返回给用户才行。那这就出现数据一致性的问题了。</p>
+<p>讲到一致性，那又可以分为<strong>强一致性，弱一致性</strong>。</p>
+<p>强一致性可以理解为在任意时刻，所有节点中的数据是一样的。同一时间点，你在节点A中获取到key1的值与在节点B中获取到key1的值应该都是一样的。弱一致性包含很多种不同的实现，目前分布式系统中广泛实现的是最终一致性。所谓最终一致性，就是不保证在任意时刻任意节点上的同一份数据都是相同的，但是随着时间的迁移，不同节点上的同一份数据总是在向趋同的方向变化。也可以简单的理解为在一段时间后，节点间的数据会最终达到一致状态。</p>
+<p>然后就引出了问题，假设一个数据发生了更新，那么我要把更新的信息发给所有的包含这个数据的服务器，并且要等他们全部返回已经更新的信息之后，才能进行之后的操作，这是强一致性。然后再看Paxos，<strong>Paxos协议就是一种在保证强一致性前提下把可用性优化到极限的算法。</strong></p>
+<p>Paxos协议提出只要系统中2f+1个节点中的f+1个节点可用，那么系统整体就可用并且能保证数据的强一致性，它对于可用性的提升是极大的，仍然假设单节点的可用性是P，那么2f+1个节点中任意组合的f+1以上个节点正常的可用性P(total)=,又假设P=0.99，f=2，P(total)=0.9999901494，可用性将从单节点的2个9提升到了5个9，这意味着系统每年的宕机时间从87.6小时降到0.086小时，这已经可以满足地球上99.99999999%的应用需求。</p>
+<p>不过Paxos这个协议该考虑的问题太多，所以只能简单描述，不过我想更多的讲一讲Raft，这个Paxos的简化版本，但是又比Paxos方便的多的协议。</p>
+<h3 id="Paxos-1">Paxos</h3><p>这里开始说Paxos，Paxos的具体内容其实在论文《Paxos made Simple》已经说的很清楚了，再描述一遍我觉得有点啰嗦了，这里贴一篇转载的文章<a href="http://csrd.aliapp.com/?p=160" target="_blank" rel="external">paxos算法介绍</a></p>
+<p>Paxos协议流程划分为两个阶段，第一阶段是Proposer学习提案最新状态的准备阶段；第二阶段是根据学习到的状态组成正确提案提交的阶段，完整的协议过程如下：</p>
+<p><strong>阶段 1:</strong></p>
+<p>1.Proposer选择一个提案编号n ，然后向半数以上的Acceptors发送编号为 n 的prepare请求。</p>
+<p>2.如果一个Acceptor收到一个编号为n 的prepare请求，且 n 大于它已经响应的所有prepare请求的编号，那么它就会保证不会再通过(accept)任何编号小于 n 的提案，同时将它已经通过的最大编号的提案(如果存在的话)作为响应。</p>
+<p><strong>阶段 2:</strong></p>
+<p>1.如果Proposer收到来自半数以上的Acceptor对于它的prepare请求(编号为n )的响应，那么它就会发送一个针对编号为 n ，value值为 v 的提案的accept请求给Acceptors，在这里 v 是收到的响应中编号最大的提案的值，如果响应中不包含提案，那么它就是任意值。</p>
+<p>2.如果Acceptor收到一个针对编号n 的提案的accept请求，只要它还未对编号大于 n 的prepare请求作出响应，它就可以通过这个提案。</p>
+</span>
       
     </div>
 
@@ -229,13 +228,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/01/08/MIT-6-824-学习笔记-一/" rel="prev">MIT-6.824 学习笔记(一)</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/29/我的大学/" rel="next">我的大学</a>
+              <a href="/2016/02/06/零碎的一些思考/" rel="next">零碎的一些思考</a>
             
           </div>
         </div>
@@ -349,7 +346,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2015"><span class="nav-number">1.</span> <span class="nav-text">2015</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创业的那群焦糖er"><span class="nav-number">1.1.</span> <span class="nav-text">创业的那群焦糖er</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阿里的那群小伙伴"><span class="nav-number">1.2.</span> <span class="nav-text">阿里的那群小伙伴</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2016_你好"><span class="nav-number">2.</span> <span class="nav-text">2016 你好</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2016_加油!"><span class="nav-number">2.1.</span> <span class="nav-text">2016 加油!</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Paxos"><span class="nav-number">1.</span> <span class="nav-text">Paxos</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CAP理论"><span class="nav-number">1.1.</span> <span class="nav-text">CAP理论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Paxos-1"><span class="nav-number">1.2.</span> <span class="nav-text">Paxos</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
