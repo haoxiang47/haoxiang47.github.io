@@ -40,13 +40,13 @@
 <meta name="description" content="PaxosLab3的内容呢就是让你把K/V service实现Paxos。这里就不得不说到大名鼎鼎的Paxos了，所以这里应该会有较大篇幅讲一讲Paxos，包括衍伸出来的CAP理论，两端提交协议，拜占庭将军问题等等。至于lab的内容因为实验的wiki上已经给了伪代码实现了，所以其实并不复杂，不过理解Paxos那可是费了大力气。
 CAP理论首先要说Paxos就要先说下CAP。首先CAP是针对于分布式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MIT-学习笔记-三">
+<meta property="og:title" content="MIT-6.824学习笔记-三">
 <meta property="og:url" content="http://yoursite.com/2016/02/13/MIT-学习笔记-三/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="PaxosLab3的内容呢就是让你把K/V service实现Paxos。这里就不得不说到大名鼎鼎的Paxos了，所以这里应该会有较大篇幅讲一讲Paxos，包括衍伸出来的CAP理论，两端提交协议，拜占庭将军问题等等。至于lab的内容因为实验的wiki上已经给了伪代码实现了，所以其实并不复杂，不过理解Paxos那可是费了大力气。
 CAP理论首先要说Paxos就要先说下CAP。首先CAP是针对于分布式">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MIT-学习笔记-三">
+<meta name="twitter:title" content="MIT-6.824学习笔记-三">
 <meta name="twitter:description" content="PaxosLab3的内容呢就是让你把K/V service实现Paxos。这里就不得不说到大名鼎鼎的Paxos了，所以这里应该会有较大篇幅讲一讲Paxos，包括衍伸出来的CAP理论，两端提交协议，拜占庭将军问题等等。至于lab的内容因为实验的wiki上已经给了伪代码实现了，所以其实并不复杂，不过理解Paxos那可是费了大力气。
 CAP理论首先要说Paxos就要先说下CAP。首先CAP是针对于分布式">
 
@@ -60,7 +60,7 @@ CAP理论首先要说Paxos就要先说下CAP。首先CAP是针对于分布式">
 
 
 
-  <title> MIT-学习笔记-三 | Hexo </title>
+  <title> MIT-6.824学习笔记-三 | Hexo </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="">
@@ -169,7 +169,7 @@ CAP理论首先要说Paxos就要先说下CAP。首先CAP是针对于分布式">
           
           
             
-              MIT-学习笔记-三
+              MIT-6.824学习笔记-三
             
           
         </h1>
@@ -203,13 +203,13 @@ CAP理论首先要说Paxos就要先说下CAP。首先CAP是针对于分布式">
 <p>1、C（Consistency）：数据的一致性，是指分布式系统中每个节点中的数据，在同一时刻状态是否是一致的。</p>
 <p>2、A（Aviliability）：系统的可用性，是指当集群中的部分节点出现故障后，系统是否依旧正常运行。</p>
 <p>3、P（Partition Tolerance）：分区容忍性，是指当集群中的节点由于网络分区失去联系后，系统是否依旧正常运行。分区主要强调的是无法通信。此处的“正常运行”需要理解下：正常运行指的是，在没有任何因素影响下的理想状态，不是仅仅单指能否访问、能否回应客户端。</p>
-<p>CAP理论认为<strong>三者不能同时满足</strong>。比如说：如下图：<br>。。。。。<br>所以很多Nosql系统都不得不在这三样中权衡。在分布式系统中，我们一般认为网络故障是常态，就是分区容忍性是一定要保证的，所以要在一致性和可用性当中做权衡。或者是，是在数据一致性和服务延迟之间的权衡。for example .亚马逊的Dynamo是为它的电商平台服务的，阿里的ODPS也是一样，这些服务有个特点，就是在线服务，延迟不能太久，不然你点个购物车一分钟才返回给你数据，那还怎么秒抢双十一？所以这个就必须保证高可用性。然而这里要保证高可用性，就必须进行数据复制。因为分区容忍性是一定要保证的，所以万一一台数据服务器挂了，你必须去备份的服务器读数据返回给用户才行。那这就出现数据一致性的问题了。</p>
+<p>CAP理论认为<strong>三者不能同时满足</strong>。所以很多Nosql系统都不得不在这三样中权衡。在分布式系统中，我们一般认为网络故障是常态，就是分区容忍性是一定要保证的，所以要在一致性和可用性当中做权衡。或者是，是在数据一致性和服务延迟之间的权衡。for example .亚马逊的Dynamo是为它的电商平台服务的，阿里的ODPS也是一样，这些服务有个特点，就是在线服务，延迟不能太久，不然你点个购物车一分钟才返回给你数据，那还怎么秒抢双十一？所以这个就必须保证高可用性。然而这里要保证高可用性，就必须进行数据复制。因为分区容忍性是一定要保证的，所以万一一台数据服务器挂了，你必须去备份的服务器读数据返回给用户才行。那这就出现数据一致性的问题了。</p>
 <p>讲到一致性，那又可以分为<strong>强一致性，弱一致性</strong>。</p>
 <p>强一致性可以理解为在任意时刻，所有节点中的数据是一样的。同一时间点，你在节点A中获取到key1的值与在节点B中获取到key1的值应该都是一样的。弱一致性包含很多种不同的实现，目前分布式系统中广泛实现的是最终一致性。所谓最终一致性，就是不保证在任意时刻任意节点上的同一份数据都是相同的，但是随着时间的迁移，不同节点上的同一份数据总是在向趋同的方向变化。也可以简单的理解为在一段时间后，节点间的数据会最终达到一致状态。</p>
 <p>然后就引出了问题，假设一个数据发生了更新，那么我要把更新的信息发给所有的包含这个数据的服务器，并且要等他们全部返回已经更新的信息之后，才能进行之后的操作，这是强一致性。然后再看Paxos，<strong>Paxos协议就是一种在保证强一致性前提下把可用性优化到极限的算法。</strong></p>
 <p>Paxos协议提出只要系统中2f+1个节点中的f+1个节点可用，那么系统整体就可用并且能保证数据的强一致性，它对于可用性的提升是极大的，仍然假设单节点的可用性是P，那么2f+1个节点中任意组合的f+1以上个节点正常的可用性P(total)=,又假设P=0.99，f=2，P(total)=0.9999901494，可用性将从单节点的2个9提升到了5个9，这意味着系统每年的宕机时间从87.6小时降到0.086小时，这已经可以满足地球上99.99999999%的应用需求。</p>
 <p>不过Paxos这个协议该考虑的问题太多，所以只能简单描述，不过我想更多的讲一讲Raft，这个Paxos的简化版本，但是又比Paxos方便的多的协议。</p>
-<h3 id="Paxos-1">Paxos</h3><p>这里开始说Paxos，Paxos的具体内容其实在论文《Paxos made Simple》已经说的很清楚了，再描述一遍我觉得有点啰嗦了，这里贴一篇转载的文章<a href="http://csrd.aliapp.com/?p=160" target="_blank" rel="external">paxos算法介绍</a></p>
+<h3 id="Paxos-1">Paxos</h3><p>这里开始说Paxos，Paxos的具体内容其实在论文《Paxos made Simple》已经说的很清楚了，而且有了非常严格的证明，这里我就略过证明的部分，直接说最终得到的协议的过程。</p>
 <p>Paxos协议流程划分为两个阶段，第一阶段是Proposer学习提案最新状态的准备阶段；第二阶段是根据学习到的状态组成正确提案提交的阶段，完整的协议过程如下：</p>
 <p><strong>阶段 1:</strong></p>
 <p>1.Proposer选择一个提案编号n ，然后向半数以上的Acceptors发送编号为 n 的prepare请求。</p>
@@ -217,6 +217,9 @@ CAP理论首先要说Paxos就要先说下CAP。首先CAP是针对于分布式">
 <p><strong>阶段 2:</strong></p>
 <p>1.如果Proposer收到来自半数以上的Acceptor对于它的prepare请求(编号为n )的响应，那么它就会发送一个针对编号为 n ，value值为 v 的提案的accept请求给Acceptors，在这里 v 是收到的响应中编号最大的提案的值，如果响应中不包含提案，那么它就是任意值。</p>
 <p>2.如果Acceptor收到一个针对编号n 的提案的accept请求，只要它还未对编号大于 n 的prepare请求作出响应，它就可以通过这个提案。</p>
+<p>这样一个算法过程就保证了：</p>
+<p>（1）：任意时刻，就算存在多个Proposer在询问之后提出了不同的值的提案，最终只有其中一个Proposer的提案中的值将会Acceptor接受，即只有一个值能够被决定。</p>
+<p>（2）当提案的值被决定为后，假设被决定为c，之后任意的Proposer提出的提案的值也是c</p>
 </span>
       
     </div>
@@ -227,6 +230,8 @@ CAP理论首先要说Paxos就要先说下CAP。首先CAP是针对于分布式">
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/10/Gap-开始！/" rel="prev">Gap 开始！</a>
             
           </div>
 
@@ -294,7 +299,7 @@ CAP理论首先要说Paxos就要先说下CAP。首先CAP是针对于分布式">
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
