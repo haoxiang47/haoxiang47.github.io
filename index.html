@@ -110,7 +110,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             <i class="menu-item-icon icon-next-home"></i> <br />
-            Startseite
+            Home
           </a>
         </li>
       
@@ -118,7 +118,7 @@
         <li class="menu-item menu-item-about">
           <a href="/About" rel="section">
             <i class="menu-item-icon icon-next-about"></i> <br />
-            Über
+            About
           </a>
         </li>
       
@@ -126,7 +126,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             <i class="menu-item-icon icon-next-archives"></i> <br />
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -175,7 +175,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Veröffentlicht am
+          Posted on
           <time itemprop="dateCreated" datetime="2016-12-08T00:10:39+08:00" content="2016-12-08">
             2016-12-08
           </time>
@@ -221,7 +221,9 @@
 <p>并行是指程序的运行状态。如果一个程序在某一时刻被多个CPU流水线同时进行处理，那么我们就说这个程序是以并行的形式在运行。（严格意义上讲，我们不能说某程序是“并行”的，因为“并行”不是描述程序本身，而是描述程序的运行状态，但这篇小文里就不那么咬文嚼字，以下说到“并行”的时候，就是指代“以并行的形式运行”）显然，并行一定是需要硬件支持的。</p>
 <p>所以我们就知道，进程是有自己的隔离空间的，在CPU中多个进程运行是靠时钟终端来抢占CPU时间的，线程的切换也是如此，而且比进程灵活的是进程的切换调度我们只能依赖操作系统，线程的话我们可以自己控制调度，我们可以通过系统调用来切换到内核进程，然后对整个系统的线程进行调度，所以其实线程调度和并发的逻辑和原理并不复杂，哪个线程抢占CPU全部由内核线程来调度，然后线程通过时钟中断或者系统调用来让内核获得控制权，从而进行调度。</p>
 <p>所以从上面的逻辑中，我们可以自己设计一个并发编程的框架，不依赖系统的线程和系统调度，为了描述方便，我们接下来把“代码片段”称为“任务”。<br>下面通过摘取一篇blog中的片段来解释如何自己设计一个并发编程框架：<br><a href="http://www.sizeofvoid.net/goroutine-under-the-hood/" target="_blank" rel="external">http://www.sizeofvoid.net/goroutine-under-the-hood/</a></p>
+<hr>
 <p>&gt;<br>和内核的实现类似，只是我们不需要考虑中断和系统调用，那么，我们的程序本质上就是一个循环，这个循环本身就是调度程序schedule()，我们需要维护一个任务的列表，根据我们定义的策略，先进先出或是有优先级等等，每次从列表里挑选出一个任务，然后恢复各个寄存器的值，并且JMP到该任务上次被暂停的地方，所有这些需要保存的信息都可以作为该任务的属性，存放在任务列表里。<br>&gt;<br>看起来很简单啊，可是我们还需要解决几个问题：<br>&gt;<br>(1) 我们运行在用户态，是没有中断或系统调用这样的机制来打断代码执行的，那么，一旦我们的schedule()代码把控制权交给了任务的代码，我们下次的调度在什么时候发生？答案是，不会发生，只有靠任务主动调用schedule()，我们才有机会进行调度，所以，这里的任务不能像线程一样依赖内核调度从而毫无顾忌的执行，我们的任务里一定要显式的调用schedule()，这就是所谓的协作式(cooperative)调度。(虽然我们可以通过注册信号处理函数来模拟内核里的时钟中断并取得控制权，可问题在于，信号处理函数是由内核调用的，在其结束的时候，内核重新获得控制权，随后返回用户态并继续沿着信号发生时被中断的代码路径执行，从而我们无法在信号处理函数内进行任务切换)<br>&gt;<br>(2) 堆栈。和内核调度线程的原理一样，我们也需要为每个任务单独分配堆栈，并且把其堆栈信息保存在任务属性里，在任务切换时也保存或恢复当前的SS:ESP。任务堆栈的空间可以是在当前线程的堆栈上分配，也可以是在堆上分配，但通常是在堆上分配比较好：几乎没有大小或任务总数的限制、堆栈大小可以动态扩展(gcc有split stack，但太复杂了)、便于把任务切换到其他线程。<br>&gt;<br>到这里，我们大概知道了如何构造一个并发的编程框架，可如何让任务可以并行的在多个逻辑处理器上执行呢？只有内核才有调度CPU的权限，所以，我们还是必须通过系统调用创建线程，才可以实现并行。在多线程处理多任务的时候，我们还需要考虑几个问题：<br>&gt;<br>(1) 如果某个任务发起了一个系统调用，譬如长时间等待IO，那当前线程就被内核放入了等待调度的队列，岂不是让其他任务都没有机会执行？<br>&gt;<br>在单线程的情况下，我们只有一个解决办法，就是使用非阻塞的IO系统调用，并让出CPU，然后在schedule()里统一进行轮询，有数据时切换回该fd对应的任务；效率略低的做法是不进行统一轮询，让各个任务在轮到自己执行时再次用非阻塞方式进行IO，直到有数据可用。<br>&gt;<br>如果我们采用多线程来构造我们整个的程序，那么我们可以封装系统调用的接口，当某个任务进入系统调用时，我们就把当前线程留给它(暂时)独享，并开启新的线程来处理其他任务。<br>&gt;<br>(2) 任务同步。譬如我们上节提到的生产者和消费者的例子，如何让消费者在数据还没有被生产出来的时候进入等待，并且在数据可用时触发消费者继续执行呢？<br>&gt;<br>在单线程的情况下，我们可以定义一个结构，其中有变量用于存放交互数据本身，以及数据的当前可用状态，以及负责读写此数据的两个任务的编号。然后我们的并发编程框架再提供read和write方法供任务调用，在read方法里，我们循环检查数据是否可用，如果数据还不可用，我们就调用schedule()让出CPU进入等待；在write方法里，我们往结构里写入数据，更改数据可用状态，然后返回；在schedule()里，我们检查数据可用状态，如果可用，则激活需要读取此数据的任务，该任务继续循环检测数据是否可用，发现可用，读取，更改状态为不可用，返回。</p>
+<hr>
 <p>所以golang的goroutine就是golang自己实现的类似协程的一个并发编程的框架，他就是一个函数的入口，可以在堆上为这个函数分配堆栈，所以很廉价，可以很轻松的创建上万个goroutine，因为他不涉及到操作系统的调度。他们之间通过channel来通信。</p>
 </span>
         
@@ -263,7 +265,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Veröffentlicht am
+          Posted on
           <time itemprop="dateCreated" datetime="2016-10-10T13:26:23+08:00" content="2016-10-10">
             2016-10-10
           </time>
@@ -333,7 +335,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Veröffentlicht am
+          Posted on
           <time itemprop="dateCreated" datetime="2016-02-13T12:23:51+08:00" content="2016-02-13">
             2016-02-13
           </time>
@@ -417,7 +419,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Veröffentlicht am
+          Posted on
           <time itemprop="dateCreated" datetime="2016-01-23T21:39:30+08:00" content="2016-01-23">
             2016-01-23
           </time>
@@ -500,7 +502,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Veröffentlicht am
+          Posted on
           <time itemprop="dateCreated" datetime="2016-01-08T00:46:30+08:00" content="2016-01-08">
             2016-01-08
           </time>
@@ -578,7 +580,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Veröffentlicht am
+          Posted on
           <time itemprop="dateCreated" datetime="2015-12-31T03:10:16+08:00" content="2015-12-31">
             2015-12-31
           </time>
@@ -657,7 +659,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Veröffentlicht am
+          Posted on
           <time itemprop="dateCreated" datetime="2015-09-29T14:09:44+08:00" content="2015-09-29">
             2015-09-29
           </time>
@@ -735,7 +737,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Veröffentlicht am
+          Posted on
           <time itemprop="dateCreated" datetime="2015-05-21T14:42:37+08:00" content="2015-05-21">
             2015-05-21
           </time>
@@ -813,21 +815,21 @@
           <div class="site-state-item site-state-posts">
             <a href="/archives">
               <span class="site-state-item-count">8</span>
-              <span class="site-state-item-name">Artikel</span>
+              <span class="site-state-item-name">posts</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
               <span class="site-state-item-count">0</span>
-              <span class="site-state-item-name">Kategorien</span>
+              <span class="site-state-item-name">categories</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
               <span class="site-state-item-count">0</span>
-              <span class="site-state-item-name">Tags</span>
+              <span class="site-state-item-name">tags</span>
               </a>
           </div>
 
@@ -878,7 +880,7 @@
 </div>
 
 <!-- <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="http://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
 </div> -->
 
 
