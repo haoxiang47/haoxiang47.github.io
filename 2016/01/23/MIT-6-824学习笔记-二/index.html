@@ -45,6 +45,7 @@ Lab2 Overview这部分的实验主要会实现容错的机制并且完成一个K
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="这是学习笔记的第二篇，这篇主要是记录我完成MIT-6.824 lab 2 的思路和想法
 Lab2 Overview这部分的实验主要会实现容错的机制并且完成一个K/V service的雏形。容错的机制其实就是用主备系统来实现。这里用一种叫viewservice的server来完成lab。viewservice会不断监控每一个server是否还alive，如果primary server或者backu">
+<meta property="og:updated_time" content="2016-01-28T04:33:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT-6.824学习笔记(二)">
 <meta name="twitter:description" content="这是学习笔记的第二篇，这篇主要是记录我完成MIT-6.824 lab 2 的思路和想法
@@ -114,7 +115,7 @@ Lab2 Overview这部分的实验主要会实现容错的机制并且完成一个K
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             <i class="menu-item-icon icon-next-home"></i> <br />
-            首頁
+            Startseite
           </a>
         </li>
       
@@ -122,7 +123,7 @@ Lab2 Overview这部分的实验主要会实现容错的机制并且完成一个K
         <li class="menu-item menu-item-about">
           <a href="/About" rel="section">
             <i class="menu-item-icon icon-next-about"></i> <br />
-            關於
+            Über
           </a>
         </li>
       
@@ -130,7 +131,7 @@ Lab2 Overview这部分的实验主要会实现容错的机制并且完成一个K
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             <i class="menu-item-icon icon-next-archives"></i> <br />
-            歸檔
+            Archiv
           </a>
         </li>
       
@@ -138,7 +139,7 @@ Lab2 Overview这部分的实验主要会实现容错的机制并且完成一个K
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             <i class="menu-item-icon icon-next-tags"></i> <br />
-            標籤
+            Tags
           </a>
         </li>
       
@@ -177,7 +178,7 @@ Lab2 Overview这部分的实验主要会实现容错的机制并且完成一个K
 
       <div class="post-meta">
         <span class="post-time">
-          發表於
+          Veröffentlicht am
           <time itemprop="dateCreated" datetime="2016-01-23T21:39:30+08:00" content="2016-01-23">
             2016-01-23
           </time>
@@ -211,11 +212,11 @@ Lab2 Overview这部分的实验主要会实现容错的机制并且完成一个K
 </ul>
 <h2 id="Part_A">Part A</h2><p>好了首先我们来实现这个View Service，就是完成primary/backup结构。<br>整体思路大概是这样的，client和server通过Ping()方法，也就是RPC请求来通信。client向view server发送的ping带两个参数，me:string,viewnum:int 也就是client的name和viewnum。其中me用来判断是primary还是backup或者是空闲的server。viewnum用来判断是否现在的primary已经被知晓。</p>
 <p>从上面的逻辑我们可以很简单的完成client的代码，其实工程中很多的方法和接口已经写好了，核心部分我们只要完成viewservice/client.go 中的Ping()方法就行。如下：</p>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> (ck *Clerk) Ping(viewnum <span class="typename">uint</span>) (View, error) &#123;</span><br><span class="line">	<span class="comment">// prepare the arguments.</span></span><br><span class="line">	args := &amp;PingArgs&#123;&#125;</span><br><span class="line">	args.Me = ck.me</span><br><span class="line">	args.Viewnum = viewnum</span><br><span class="line">	<span class="keyword">var</span> reply PingReply</span><br><span class="line"></span><br><span class="line">	<span class="comment">// send an RPC request, wait for the reply.</span></span><br><span class="line">	ok := call(ck.server, <span class="string">"ViewServer.Ping"</span>, args, &amp;reply)</span><br><span class="line">	<span class="keyword">if</span> ok == <span class="constant">false</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> View&#123;&#125;, fmt.Errorf(<span class="string">"Ping(%v) failed"</span>, viewnum)</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> reply.View, <span class="constant">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(ck *Clerk)</span> <span class="title">Ping</span><span class="params">(viewnum <span class="keyword">uint</span>)</span> <span class="params">(View, error)</span></span> &#123;</div><div class="line">	<span class="comment">// prepare the arguments.</span></div><div class="line">	args := &amp;PingArgs&#123;&#125;</div><div class="line">	args.Me = ck.me</div><div class="line">	args.Viewnum = viewnum</div><div class="line">	<span class="keyword">var</span> reply PingReply</div><div class="line"></div><div class="line">	<span class="comment">// send an RPC request, wait for the reply.</span></div><div class="line">	ok := call(ck.server, <span class="string">"ViewServer.Ping"</span>, args, &amp;reply)</div><div class="line">	<span class="keyword">if</span> ok == <span class="literal">false</span> &#123;</div><div class="line">		<span class="keyword">return</span> View&#123;&#125;, fmt.Errorf(<span class="string">"Ping(%v) failed"</span>, viewnum)</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">return</span> reply.View, <span class="literal">nil</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>然后是服务端接收到ping并且得到传来的参数后作出的反应。在viewservice/server.go中。如下：</p>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> (vs *ViewServer) Ping(args *PingArgs, reply *PingReply) error &#123;</span><br><span class="line">		id, viewnum := args.Me,args.Viewnum</span><br><span class="line">	<span class="keyword">switch</span> id &#123;</span><br><span class="line">		<span class="keyword">case</span> vs.curr.Primary:</span><br><span class="line">			<span class="keyword">if</span> viewnum == vs.curr.Viewnum &#123;</span><br><span class="line">				vs.hasPrimaryAcked = <span class="constant">true</span></span><br><span class="line">				vs.lastSeen[vs.curr.Primary] = time.Now()</span><br><span class="line">			&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">				vs.promoteBackup()</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">case</span> vs.curr.Backup:</span><br><span class="line">			<span class="keyword">if</span> viewnum == vs.curr.Viewnum &#123;</span><br><span class="line">				vs.lastSeen[vs.curr.Backup] = time.Now()</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				vs.removeBackup()</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">default</span> :</span><br><span class="line">			vs.addServer(id)</span><br><span class="line">	&#125;</span><br><span class="line">		reply.View = vs.curr</span><br><span class="line">		<span class="keyword">return</span> <span class="constant">nil</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(vs *ViewServer)</span> <span class="title">Ping</span><span class="params">(args *PingArgs, reply *PingReply)</span> <span class="title">error</span></span> &#123;</div><div class="line">		id, viewnum := args.Me,args.Viewnum</div><div class="line">	<span class="keyword">switch</span> id &#123;</div><div class="line">		<span class="keyword">case</span> vs.curr.Primary:</div><div class="line">			<span class="keyword">if</span> viewnum == vs.curr.Viewnum &#123;</div><div class="line">				vs.hasPrimaryAcked = <span class="literal">true</span></div><div class="line">				vs.lastSeen[vs.curr.Primary] = time.Now()</div><div class="line">			&#125;<span class="keyword">else</span> &#123;</div><div class="line">				vs.promoteBackup()</div><div class="line">			&#125;</div><div class="line"></div><div class="line">		<span class="keyword">case</span> vs.curr.Backup:</div><div class="line">			<span class="keyword">if</span> viewnum == vs.curr.Viewnum &#123;</div><div class="line">				vs.lastSeen[vs.curr.Backup] = time.Now()</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				vs.removeBackup()</div><div class="line">			&#125;</div><div class="line">		<span class="keyword">default</span> :</div><div class="line">			vs.addServer(id)</div><div class="line">	&#125;</div><div class="line">		reply.View = vs.curr</div><div class="line">		<span class="keyword">return</span> <span class="literal">nil</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>主要就是根据me和viewnum来判断情况。如果me是primary，则判断viewnum是否和现在的viewnum相同，相同则说明primary已经被ack了，记下时间。不同则说明现在的primary可能已经挂了。就要将backup变成primary，执行promoteBackup(）函数。</p>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">func</span> (vs *ViewServer) promoteBackup() <span class="typename">bool</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> !vs.hasPrimaryAcked &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="constant">false</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> vs.curr.Backup == <span class="string">""</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="constant">false</span></span><br><span class="line">	&#125;</span><br><span class="line">	vs.changeView(vs.curr.Viewnum+<span class="number">1</span>, vs.curr.Backup, <span class="string">""</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="constant">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(vs *ViewServer)</span> <span class="title">promoteBackup</span><span class="params">()</span> <span class="title">bool</span></span> &#123;</div><div class="line">	<span class="keyword">if</span> !vs.hasPrimaryAcked &#123;</div><div class="line">		<span class="keyword">return</span> <span class="literal">false</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">if</span> vs.curr.Backup == <span class="string">""</span> &#123;</div><div class="line">		<span class="keyword">return</span> <span class="literal">false</span></div><div class="line">	&#125;</div><div class="line">	vs.changeView(vs.curr.Viewnum+<span class="number">1</span>, vs.curr.Backup, <span class="string">""</span>)</div><div class="line"></div><div class="line">	<span class="keyword">return</span> <span class="literal">true</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>若是me是backup，则判断viewnum和现在的是否相等。不等的话就移除这个backup。</p>
 <h3 id="Part_B">Part B</h3><p>这部分就是在之前primary/backup的基础上，加上K/V service。未完待续！</p>
 <h3 id="Golang_RPC">Golang RPC</h3><p>未完待续！</p>
@@ -281,10 +282,10 @@ Lab2 Overview这部分的实验主要会实现容错的机制并且完成一个K
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目錄
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            本站概覽
+            Übersicht
           </li>
         </ul>
       
@@ -298,22 +299,22 @@ Lab2 Overview这部分的实验主要会实现容错的机制并且完成一个K
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">7</span>
-              <span class="site-state-item-name">文章</span>
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">Artikel</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
               <span class="site-state-item-count">0</span>
-              <span class="site-state-item-name">分類</span>
+              <span class="site-state-item-name">Kategorien</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
               <span class="site-state-item-count">0</span>
-              <span class="site-state-item-name">標籤</span>
+              <span class="site-state-item-name">Tags</span>
               </a>
           </div>
 
@@ -367,7 +368,7 @@ Lab2 Overview这部分的实验主要会实现容错的机制并且完成一个K
       <div class="footer-inner"> <div class="copyright" >
   
   &copy; &nbsp; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="icon-next-heart"></i>
   </span>
@@ -375,7 +376,7 @@ Lab2 Overview这部分的实验主要会实现容错的机制并且完成一个K
 </div>
 
 <!-- <div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+  Erstellt mit  <a class="theme-link" href="http://hexo.io">Hexo</a>
 </div> -->
 
 

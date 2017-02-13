@@ -1,0 +1,637 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="最近老大说有个活需要快速撸一个web原型出来，后端随意选择，我就想这么自由的话那我就玩玩golang吧，就简单入坑了一下。其实之前做MIT6.828的时候接触过Golang，不过当时其实写的并没有很爽，加上但是是跟着lab来做，很多golang的特性什么都其实都没有涉及到。这次正好就用golang写写server，正好还涉及到了一些分布式和并发的部分，就想试试golang的并发。
+Beego入坑的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简单聊一聊Golang（一）">
+<meta property="og:url" content="http://yoursite.com/2016/12/08/简单聊一聊Golang/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="最近老大说有个活需要快速撸一个web原型出来，后端随意选择，我就想这么自由的话那我就玩玩golang吧，就简单入坑了一下。其实之前做MIT6.828的时候接触过Golang，不过当时其实写的并没有很爽，加上但是是跟着lab来做，很多golang的特性什么都其实都没有涉及到。这次正好就用golang写写server，正好还涉及到了一些分布式和并发的部分，就想试试golang的并发。
+Beego入坑的">
+<meta property="og:image" content="http://yoursite.com/img/Simlely-talk-about-golang/bee-tool.png">
+<meta property="og:image" content="http://yoursite.com/img/Simlely-talk-about-golang/concurrent_and_parallel.png">
+<meta property="og:updated_time" content="2017-02-13T06:11:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="简单聊一聊Golang（一）">
+<meta name="twitter:description" content="最近老大说有个活需要快速撸一个web原型出来，后端随意选择，我就想这么自由的话那我就玩玩golang吧，就简单入坑了一下。其实之前做MIT6.828的时候接触过Golang，不过当时其实写的并没有很爽，加上但是是跟着lab来做，很多golang的特性什么都其实都没有涉及到。这次正好就用golang写写server，正好还涉及到了一些分布式和并发的部分，就想试试golang的并发。
+Beego入坑的">
+<meta name="twitter:image" content="http://yoursite.com/img/Simlely-talk-about-golang/bee-tool.png">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+
+
+  <title> 简单聊一聊Golang（一） | Hexo </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title"> HandSon 翔少</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/About" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            Über
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            Tags
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              简单聊一聊Golang（一）
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Veröffentlicht am
+          <time itemprop="dateCreated" datetime="2016-12-08T00:10:39+08:00" content="2016-12-08">
+            2016-12-08
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>最近老大说有个活需要快速撸一个web原型出来，后端随意选择，我就想这么自由的话那我就玩玩golang吧，就简单入坑了一下。其实之前做MIT6.828的时候接触过Golang，不过当时其实写的并没有很爽，加上但是是跟着lab来做，很多golang的特性什么都其实都没有涉及到。这次正好就用golang写写server，正好还涉及到了一些分布式和并发的部分，就想试试golang的并发。</p>
+<h2 id="Beego">Beego</h2><p>入坑的server框架我随手选了一个Beego，其实也不算随手，因为是看Beego有完整的中文文档，而且很多大公司都在用，在github上的star也相当之高，而且评价都挺好，属于比较稳定比较全的框架，就先用它入手玩玩。花了2天看了一下Golang的语法，一周时间撸了一个server出来。觉得Golang写得有时候还是挺爽，写并发确实方便。</p>
+<h3 id="模块">模块</h3><p>根据官网的叙述，beego是个HTTP框架，可以快速开发API层，后端逻辑层和数据接口层。和flask比较相似。结构高度模块化，基础的模块比如log，orm，config，cache，httplibs等都是高度解耦，你可以很容易的组织项目的model层，controller层，还有统一的路由模块。很小巧很灵活，比SSH那种大而全的是简单多了。个人感觉controller层封装的还挺方便的。orm层的话，对表的匹配竟然是通过大小写匹配的，比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">type DruidHistorySearch struct &#123;</div><div class="line">	PressureTestName    string</div><div class="line">	PressureTestVersion string</div><div class="line">	Author              string</div><div class="line">	CreateTime          string</div><div class="line">	SpendTime           int</div><div class="line">	IsMoreCity          bool</div><div class="line">	IsHaveInterval      bool</div><div class="line">	Qps                 int</div><div class="line">	Half                int `orm:&quot;column(50p)&quot;`</div><div class="line">	NinetyFive          int `orm:&quot;column(95p)&quot;`</div><div class="line">	NinetyNine          int `orm:&quot;column(99p)&quot;`</div><div class="line">	Avg                 int</div><div class="line">	Max                 int</div><div class="line">	Min                 int</div><div class="line">	ErrorPercent        float64</div><div class="line">	JsonStr             string</div><div class="line">	Id                  int</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>默认会把驼峰的命名转成带下划线的，比如这样就会转成这样一张表：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE `druid_history_search` (</div><div class="line">  `pressure_test_name` varchar(255) DEFAULT NULL,</div><div class="line">  `pressure_test_version` varchar(10) DEFAULT NULL,</div><div class="line">  `author` varchar(10) DEFAULT NULL,</div><div class="line">  `signal` varchar(50) DEFAULT NULL,</div><div class="line">  `create_time` datetime DEFAULT NULL,</div><div class="line">  `spend_time` int(11) DEFAULT NULL,</div><div class="line">  `is_more_city` tinyint(1) DEFAULT NULL,</div><div class="line">  `is_have_interval` tinyint(1) DEFAULT NULL,</div><div class="line">  `qps` int(11) DEFAULT NULL,</div><div class="line">  `fifty_percent` int(11) DEFAULT NULL,</div><div class="line">  `ninety_five_percent` int(11) DEFAULT NULL,</div><div class="line">  `ninety_nine_percent` int(11) DEFAULT NULL,</div><div class="line">  `avg` int(11) DEFAULT NULL,</div><div class="line">  `max_qps` int(11) DEFAULT NULL,</div><div class="line">  `min_qps` int(11) DEFAULT NULL,</div><div class="line">  `error_percent` float DEFAULT NULL,</div><div class="line">  `json_str` blob,</div><div class="line">  `id` int(11) NOT NULL AUTO_INCREMENT,</div><div class="line">  PRIMARY KEY (`id`)</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>因为我数据库用的是mysql，设置了大小写不敏感，如果设置了大小写敏感，就需要用这样的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Half                int `orm:&quot;column(50p)&quot;`</div></pre></td></tr></table></figure>
+<p>来特别指定这个变量在表中代表的字段了。</p>
+<h3 id="打包部署">打包部署</h3><p>beego有一个好处是提供了一套的tool来帮助开发部署。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go get github.com/beego/bee</div></pre></td></tr></table></figure>
+<p>用这个指令可以获取beego工具。比如bee指令可以有很多功能：<br><img src="/img/Simlely-talk-about-golang/bee-tool.png" alt="bee工具"></p>
+<p>用new可以新建beego项目，run可以本地热部署的运行项目，很适合debug。还可以编译到指定平台，比如你在mac上开发，想编译成linux上的可执行文件，就执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bee -be GOOS=linux GOARCH=amd64</div></pre></td></tr></table></figure>
+<p>然后把打包编译出来的文件上传的服务器上，就可以直接运行了。</p>
+<h2 id="Golang的面向对象">Golang的面向对象</h2><p>我们用面向对象的语言写了很久的工程，工业界大型系统还是以Java，C++为主。在写Golang的过程中，我发现他很多地方确实很符合软件工程的设计，很适合写工程，有着很多工程经验的约定俗成，比如变量名，代码格式化等等。这里我就讲几个特性。</p>
+<h3 id="golang的并发编程">golang的并发编程</h3><p>这个是我最喜欢的特性，当然我最开始接触的时候一直用不好。goroutine就是轻量级的线程，基本就是协程，但又有一点不一样。</p>
+<p>我曾经一直理解的协程是类似线程的一种。但是又有人理解的是callback的一种。我研究了一下，发现和我一样感觉的都是Java，C++出身，理解为callback的都是写node，lua等出身的。这里正好把这些概念理清楚下然后再和Golang的Goroutine联系起来。</p>
+<p>首先我们理清一个概念，并发和并行，就是Concurrency and Parallelism，用《Computer Systems: A Programmer’s Perspective》里面的一张图来解释：</p>
+<p><img src="/img/Simlely-talk-about-golang/concurrent_and_parallel.png" alt="并发和并行"></p>
+<p>这里可以明确，并发是逻辑架构，非并发的程序就是一根竹竿捅到底，只有一个逻辑控制流，也就是顺序执行的(Sequential)程序，在任何时刻，程序只会处在这个逻辑控制流的某个位置。而如果某个程序有多个独立的逻辑控制流，也就是可以同时处理(deal)多件事情，我们就说这个程序是并发的。这里的“同时”，并不一定要是真正在时钟的某一时刻(那是运行状态而不是逻辑结构)，而是指：如果把这些逻辑控制流画成时序流程图，它们在时间线上是可以重叠的。</p>
+<p>并行是指程序的运行状态。如果一个程序在某一时刻被多个CPU流水线同时进行处理，那么我们就说这个程序是以并行的形式在运行。（严格意义上讲，我们不能说某程序是“并行”的，因为“并行”不是描述程序本身，而是描述程序的运行状态，但这篇小文里就不那么咬文嚼字，以下说到“并行”的时候，就是指代“以并行的形式运行”）显然，并行一定是需要硬件支持的。</p>
+<p>所以我们就知道，进程是有自己的隔离空间的，在CPU中多个进程运行是靠时钟终端来抢占CPU时间的，线程的切换也是如此，而且比进程灵活的是进程的切换调度我们只能依赖操作系统，线程的话我们可以自己控制调度，我们可以通过系统调用来切换到内核进程，然后对整个系统的线程进行调度，所以其实线程调度和并发的逻辑和原理并不复杂，哪个线程抢占CPU全部由内核线程来调度，然后线程通过时钟中断或者系统调用来让内核获得控制权，从而进行调度。</p>
+<p>所以从上面的逻辑中，我们可以自己设计一个并发编程的框架，不依赖系统的线程和系统调度，为了描述方便，我们接下来把“代码片段”称为“任务”。<br>下面通过摘取一篇blog中的片段来解释如何自己设计一个并发编程框架：<br><a href="http://www.sizeofvoid.net/goroutine-under-the-hood/" target="_blank" rel="external">http://www.sizeofvoid.net/goroutine-under-the-hood/</a></p>
+<p>&gt;<br>和内核的实现类似，只是我们不需要考虑中断和系统调用，那么，我们的程序本质上就是一个循环，这个循环本身就是调度程序schedule()，我们需要维护一个任务的列表，根据我们定义的策略，先进先出或是有优先级等等，每次从列表里挑选出一个任务，然后恢复各个寄存器的值，并且JMP到该任务上次被暂停的地方，所有这些需要保存的信息都可以作为该任务的属性，存放在任务列表里。<br>&gt;<br>看起来很简单啊，可是我们还需要解决几个问题：<br>&gt;<br>(1) 我们运行在用户态，是没有中断或系统调用这样的机制来打断代码执行的，那么，一旦我们的schedule()代码把控制权交给了任务的代码，我们下次的调度在什么时候发生？答案是，不会发生，只有靠任务主动调用schedule()，我们才有机会进行调度，所以，这里的任务不能像线程一样依赖内核调度从而毫无顾忌的执行，我们的任务里一定要显式的调用schedule()，这就是所谓的协作式(cooperative)调度。(虽然我们可以通过注册信号处理函数来模拟内核里的时钟中断并取得控制权，可问题在于，信号处理函数是由内核调用的，在其结束的时候，内核重新获得控制权，随后返回用户态并继续沿着信号发生时被中断的代码路径执行，从而我们无法在信号处理函数内进行任务切换)<br>&gt;<br>(2) 堆栈。和内核调度线程的原理一样，我们也需要为每个任务单独分配堆栈，并且把其堆栈信息保存在任务属性里，在任务切换时也保存或恢复当前的SS:ESP。任务堆栈的空间可以是在当前线程的堆栈上分配，也可以是在堆上分配，但通常是在堆上分配比较好：几乎没有大小或任务总数的限制、堆栈大小可以动态扩展(gcc有split stack，但太复杂了)、便于把任务切换到其他线程。<br>&gt;<br>到这里，我们大概知道了如何构造一个并发的编程框架，可如何让任务可以并行的在多个逻辑处理器上执行呢？只有内核才有调度CPU的权限，所以，我们还是必须通过系统调用创建线程，才可以实现并行。在多线程处理多任务的时候，我们还需要考虑几个问题：<br>&gt;<br>(1) 如果某个任务发起了一个系统调用，譬如长时间等待IO，那当前线程就被内核放入了等待调度的队列，岂不是让其他任务都没有机会执行？<br>&gt;<br>在单线程的情况下，我们只有一个解决办法，就是使用非阻塞的IO系统调用，并让出CPU，然后在schedule()里统一进行轮询，有数据时切换回该fd对应的任务；效率略低的做法是不进行统一轮询，让各个任务在轮到自己执行时再次用非阻塞方式进行IO，直到有数据可用。<br>&gt;<br>如果我们采用多线程来构造我们整个的程序，那么我们可以封装系统调用的接口，当某个任务进入系统调用时，我们就把当前线程留给它(暂时)独享，并开启新的线程来处理其他任务。<br>&gt;<br>(2) 任务同步。譬如我们上节提到的生产者和消费者的例子，如何让消费者在数据还没有被生产出来的时候进入等待，并且在数据可用时触发消费者继续执行呢？<br>&gt;<br>在单线程的情况下，我们可以定义一个结构，其中有变量用于存放交互数据本身，以及数据的当前可用状态，以及负责读写此数据的两个任务的编号。然后我们的并发编程框架再提供read和write方法供任务调用，在read方法里，我们循环检查数据是否可用，如果数据还不可用，我们就调用schedule()让出CPU进入等待；在write方法里，我们往结构里写入数据，更改数据可用状态，然后返回；在schedule()里，我们检查数据可用状态，如果可用，则激活需要读取此数据的任务，该任务继续循环检测数据是否可用，发现可用，读取，更改状态为不可用，返回。</p>
+<p>所以golang的goroutine就是golang自己实现的类似协程的一个并发编程的框架，他就是一个函数的入口，可以在堆上为这个函数分配堆栈，所以很廉价，可以很轻松的创建上万个goroutine，因为他不涉及到操作系统的调度。他们之间通过channel来通信。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/10/Gap-开始！/" rel="next">Gap 开始！</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/icon.jpg" alt="linhaoxiang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">linhaoxiang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">Artikel</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">Kategorien</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">Tags</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/haoxiang47" target="_blank">Github</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/haoxiang-lin-72" target="_blank">Zhihu</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Beego"><span class="nav-number">1.</span> <span class="nav-text">Beego</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模块"><span class="nav-number">1.1.</span> <span class="nav-text">模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打包部署"><span class="nav-number">1.2.</span> <span class="nav-text">打包部署</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Golang的面向对象"><span class="nav-number">2.</span> <span class="nav-text">Golang的面向对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#golang的并发编程"><span class="nav-number">2.1.</span> <span class="nav-text">golang的并发编程</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">linhaoxiang</span>
+</div>
+
+<!-- <div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div> -->
+
+
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

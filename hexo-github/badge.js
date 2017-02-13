@@ -10,7 +10,7 @@
     link.setAttribute("href", url);
     document.getElementsByTagName("head")[0].appendChild(link);
     ns.LOADED_STYLES[url] = true;
-  }
+  };
 
   function $$(tag, classList) {
     var elem = document.createElement(tag);

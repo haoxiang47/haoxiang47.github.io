@@ -1,4 +1,7 @@
-* {
+.hexo-github {
+  padding: 8px 0px;
+}
+.hexo-github * {
   box-sizing: border-box;
 }
 .spinner {
@@ -49,7 +52,7 @@
   text-decoration: underline;
 }
 .github-badge .header {
-  background: #4caf50;
+  background: #4CAF50;
   min-height: 64px;
   overflow-y: hidden;
   padding-right: 16px;
@@ -118,7 +121,7 @@
   margin: 0px;
 }
 .github-badge .info {
-  background: #2e7d32;
+  background: #2E7D32;
   min-height: 32px;
   cursor: pointer;
   padding-right: 16px;
@@ -162,7 +165,7 @@
   background: #212121;
   height: auto;
   max-height: 256px;
-  color: #e0e0e0;
+  color: #E0E0E0;
   transition: all 0.5s ease-in-out;
 }
 .github-badge .commits.fold {
@@ -182,7 +185,7 @@
   width: 2px;
   left: 31px;
   height: 100%;
-  background: #e0e0e0;
+  background: #E0E0E0;
   opacity: 0.3;
 }
 .github-badge .commits .entry {
